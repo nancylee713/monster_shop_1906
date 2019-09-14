@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :item_orders
   has_many :orders, through: :item_orders
   belongs_to :merchant, optional: true
+  has_many :addresses
 
   enum role: [:regular_user, :merchant_employee, :merchant_admin, :admin_user]
 
