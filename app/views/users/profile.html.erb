@@ -22,9 +22,29 @@
 
     <%= link_to "My Orders", "/profile/orders", class: "btn btn-secondary" %>
   </section>
-
-
-
 </center>
+</div>
 
+<div class="container my-addresses">
+  <h3 display="display-3">My Addresses</h3><br>
+  <%= link_to "Add New Address", profile_addresses_new_path, class: "btn btn-success" %>
+  <br>
+  <div class="row">
+    <% @user.addresses.each_with_index do |address, i| %>
+     <section id='address-<%= address.id %>'>
+       <div class="col-lg">
+         <div class="card bg-light mb-3" style="max-width: 18rem;">
+           <div class="card-header">Address <%= i + 1 %></div>
+           <div class="card-body">
+             <h5 class="card-title"><%= address.nickname %></h5>
+             <p class="card-text">
+               <%= address.street %><br>
+                <%= address.city %>, <%= address.state %> <%= address.zipcode %>
+             </p>
+           </div>
+         </div>
+       </div>
+     </section>
+    <% end %>
+ </div>
 </div>
