@@ -53,6 +53,8 @@ Rails.application.routes.draw do
 
   get "/profile/addresses/new", to: "addresses#new"
   post "/profile/addresses", to: "addresses#create"
+  get "/profile/addresses/:id/edit", to: "addresses#edit"
+  patch "/profile/addresses/:id", to: "addresses#update"
 
   post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"

@@ -1,5 +1,10 @@
 class AddressesController<ApplicationController
   before_action :set_user
+  before_action :set_address, only: [:edit, :update]
+
+  def set_address
+    @address = @user.addresses.find(params[:id])
+  end
 
   def set_user
     @user = current_user
@@ -17,6 +22,20 @@ class AddressesController<ApplicationController
     else
       flash[:error] = @address.errors.full_messages.to_sentence
       redirect_to profile_addresses_new_path
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @address.update(address_params)
+    if @address.save
+      flash[:success] = "Your address is now updated!"
+      redirect_to profile_path
+    else
+      flash[:error] = @address.errors.full_messages.to_sentence
+      render :edit
     end
   end
 

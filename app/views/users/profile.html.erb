@@ -41,6 +41,7 @@
                <%= address.street %><br>
                 <%= address.city %>, <%= address.state %> <%= address.zipcode %>
              </p>
+             <p><%= link_to "Edit", "/profile/addresses/#{address.id}/edit" %></p>
            </div>
          </div>
        </div>
