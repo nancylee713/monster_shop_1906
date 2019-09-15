@@ -8,6 +8,7 @@
 
 ItemOrder.destroy_all
 Order.destroy_all
+Address.destroy_all
 User.destroy_all
 Review.destroy_all
 Item.destroy_all
@@ -30,115 +31,40 @@ dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it
 ream = dunder.items.create(name: "Ream of Paper", description: "So much paper!", price: 8, image: "https://mercari-images.global.ssl.fastly.net/photos/m66267444043_1.jpg?1567729247", inventory: 174)
 dundie = dunder.items.create(name: "Dundie Award", description: "Everyone wants one!", price: 16, image: "https://images-na.ssl-images-amazon.com/images/I/712t-j2WvwL._UX679_.jpg", inventory: 12)
 
-#tire_reviews
-review_1 = tire.reviews.create(title: 'Title 1', content: "This is content for review 1", rating: 1)
-review_2 = tire.reviews.create(title: 'Title 2', content: "This is content for review 2", rating: 2)
-review_3 = tire.reviews.create(title: 'Title 3', content: "This is content for review 3", rating: 3)
-review_4 = tire.reviews.create(title: 'Title 4', content: "This is content for review 4", rating: 1)
-review_5 = tire.reviews.create(title: 'Title 5', content: "This is content for review 5", rating: 2)
-review_6 = tire.reviews.create(title: 'Title 6', content: "This is content for review 6", rating: 3)
-
-#bike_reviews
-review_7 = bike.reviews.create(title: 'Title 1', content: "This is content for review 1", rating: 1)
-review_8 = bike.reviews.create(title: 'Title 2', content: "This is content for review 2", rating: 4)
-review_9 = bike.reviews.create(title: 'Title 3', content: "This is content for review 3", rating: 5)
-review_10 = bike.reviews.create(title: 'Title 4', content: "This is content for review 4", rating: 1)
-review_11 = bike.reviews.create(title: 'Title 5', content: "This is content for review 5", rating: 1)
-review_12 = bike.reviews.create(title: 'Title 6', content: "This is content for review 6", rating: 1)
-
-#pull_toy_reviews
-review_13 = pull_toy.reviews.create(title: 'Title 1', content: "This is content for review 1", rating: 5)
-review_14 = pull_toy.reviews.create(title: 'Title 2', content: "This is content for review 2", rating: 2)
-review_15 = pull_toy.reviews.create(title: 'Title 3', content: "This is content for review 3", rating: 5)
-review_16 = pull_toy.reviews.create(title: 'Title 4', content: "This is content for review 4", rating: 4)
-review_17 = pull_toy.reviews.create(title: 'Title 5', content: "This is content for review 5", rating: 5)
-review_18 = pull_toy.reviews.create(title: 'Title 6', content: "This is content for review 6", rating: 5)
-
-#bone_reviews
-review_19 = dog_bone.reviews.create(title: 'Title 1', content: "This is content for review 1", rating: 5)
-review_20 = dog_bone.reviews.create(title: 'Title 2', content: "This is content for review 2", rating: 4)
-review_21 = dog_bone.reviews.create(title: 'Title 3', content: "This is content for review 3", rating: 1)
-review_22 = dog_bone.reviews.create(title: 'Title 4', content: "This is content for review 4", rating: 3)
-review_23 = dog_bone.reviews.create(title: 'Title 5', content: "This is content for review 5", rating: 5)
-review_24 = dog_bone.reviews.create(title: 'Title 6', content: "This is content for review 6", rating: 5)
-
-#ream_reviews
-review_25 = ream.reviews.create(title: 'Title 1', content: "This is content for review 1", rating: 3)
-review_26 = ream.reviews.create(title: 'Title 2', content: "This is content for review 2", rating: 3)
-review_27 = ream.reviews.create(title: 'Title 3', content: "This is content for review 3", rating: 3)
-review_28 = ream.reviews.create(title: 'Title 4', content: "This is content for review 4", rating: 2)
-review_29 = ream.reviews.create(title: 'Title 5', content: "This is content for review 5", rating: 2)
-review_30 = ream.reviews.create(title: 'Title 6', content: "This is content for review 6", rating: 2)
-
-#dundie_reviews
-review_31 = dundie.reviews.create(title: 'Title 1', content: "This is content for review 1", rating: 3)
-review_32 = dundie.reviews.create(title: 'Title 2', content: "This is content for review 2", rating: 3)
-review_33 = dundie.reviews.create(title: 'Title 3', content: "This is content for review 3", rating: 4)
-review_34 = dundie.reviews.create(title: 'Title 4', content: "This is content for review 4", rating: 5)
-review_35 = dundie.reviews.create(title: 'Title 5', content: "This is content for review 5", rating: 6)
+#reviews
+tire_reviews = FactoryBot.create_list(:review, 5, item: tire)
+bike_reviews = FactoryBot.create_list(:review, 5, item: bike)
+pull_toy_reviews = FactoryBot.create_list(:review, 5, item: pull_toy)
+dog_bone_reviews = FactoryBot.create_list(:review, 5, item: dog_bone)
+ream_reviews = FactoryBot.create_list(:review, 5, item: ream)
+dundie_reviews = FactoryBot.create_list(:review, 5, item: dundie)
 
 #users
-regular_user_1 = User.create!(name: "George Jungle",
-              address: "1 Jungle Way",
-              city: "Jungleopolis",
-              state: "FL",
-              zipcode: "77652",
-              email: "junglegeorge@email.com",
-              password: "Tree123")
-regular_user_2 = User.create!(name: "John Testing",
-              address: "123 Testing Lane",
-              city: "Testico",
-              state: "TE",
-              zipcode: "77639",
-              email: "regular_user_1@email.com",
-              password: "Password123")
-merchant_employee = User.create!(name: "Dwight Schrute",
-              address: "175 Beet Rd",
-              city: "Scranton",
-              state: "PA",
-              zipcode: "18501",
-              email: "dwightkschrute@email.com",
-              password: "IdentityTheftIsNotAJoke",
-              role: 1,
-              merchant: dunder)
-merchant_admin = User.create!(name: "Michael Scott",
-              address: "1725 Slough Ave",
-              city: "Scranton",
-              state: "PA",
-              zipcode: "18501",
-              email: "michael.s@email.com",
-              password: "WorldBestBoss",
-              role: 2,
-              merchant: dunder)
-admin_user = User.create!(name: "Leslie Knope",
-              address: "14 Somewhere Ave",
-              city: "Pawnee",
-              state: "IN",
-              zipcode: "18501",
-              email: "recoffice@email.com",
-              password: "Waffles",
-              role: 3)
+user_1 = FactoryBot.create(:user)
+user_2 = FactoryBot.create(:user)
+merchant_employee = FactoryBot.create(:merchant_employee)
+merchant_admin = FactoryBot.create(:merchant_admin)
+admin = FactoryBot.create(:admin)
 
-order_1 = Order.create!(name: "Beth", address: "123 Happy St", city: "Denver", state: "CO", zip: "80205", status: 0)
-  item_order_1 = ItemOrder.create!(order: order_1, item: tire, quantity: 2, price: tire.price, user: regular_user_1, fulfilled?: 0)
-  item_order_2 = ItemOrder.create!(order: order_1, item: bike, quantity: 5, price: bike.price, user: regular_user_1, fulfilled?: 0)
-  item_order_3 = ItemOrder.create!(order: order_1, item: watch, quantity: 5, price: watch.price, user: regular_user_1, fulfilled?: 0)
+order_1 = FactoryBot.create(:order, status: 0)
+  item_order_1 = ItemOrder.create!(order: order_1, item: tire, quantity: 2, price: tire.price, user: user_1, fulfilled?: 0)
+  item_order_2 = ItemOrder.create!(order: order_1, item: bike, quantity: 5, price: bike.price, user: user_1, fulfilled?: 0)
+  item_order_3 = ItemOrder.create!(order: order_1, item: watch, quantity: 5, price: watch.price, user: user_1, fulfilled?: 0)
 
-order_2 = Order.create(name: "John", address: "123 West St", city: "Golden", state: "CO", zip: "56600", status: 0)
-  item_order_4 = ItemOrder.create(order: order_2, item: bike, quantity: 12, price: bike.price, user: regular_user_2)
-  item_order_5 = ItemOrder.create(order: order_2, item: dog_bone, quantity: 3, price: dog_bone.price, user: regular_user_2)
+order_2 = FactoryBot.create(:order, status: 0)
+  item_order_4 = ItemOrder.create(order: order_2, item: bike, quantity: 12, price: bike.price, user: user_2)
+  item_order_5 = ItemOrder.create(order: order_2, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_2)
 
+order_3 = FactoryBot.create(:order)
+  item_order_6 = ItemOrder.create(order: order_3, item: pull_toy, quantity: 4, price: pull_toy.price, user: user_1)
+  item_order_7 = ItemOrder.create(order: order_3, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_1)
+  item_order_8 = ItemOrder.create(order: order_3, item: tire, quantity: 1, price: tire.price, user: user_1)
+  item_order_9 = ItemOrder.create(order: order_3, item: bike, quantity: 1, price: bike.price, user: user_1)
 
-order_3 = Order.create(name: "Amber", address: "123 East St", city: "Denver", state: "CO", zip: "80205")
-  item_order_6 = ItemOrder.create(order: order_3, item: pull_toy, quantity: 4, price: pull_toy.price, user: regular_user_1)
-  item_order_7 = ItemOrder.create(order: order_3, item: dog_bone, quantity: 3, price: dog_bone.price, user: regular_user_1)
-  item_order_8 = ItemOrder.create(order: order_3, item: tire, quantity: 1, price: tire.price, user: regular_user_1)
-  item_order_9 = ItemOrder.create(order: order_3, item: bike, quantity: 1, price: bike.price, user: regular_user_1)
+order_4 = FactoryBot.create(:order)
+  item_order_10 = ItemOrder.create(order: order_4, item: pull_toy, quantity: 4, price: pull_toy.price, user: user_2)
+  item_order_11 = ItemOrder.create(order: order_4, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_2)
 
-order_4 = Order.create(name: "Matt", address: "123 North St", city: "Chicago", state: "IL", zip: "60701")
-  item_order_10 = ItemOrder.create(order: order_4, item: pull_toy, quantity: 4, price: pull_toy.price, user: regular_user_2)
-  item_order_11 = ItemOrder.create(order: order_4, item: dog_bone, quantity: 3, price: dog_bone.price, user: regular_user_2)
-
-order_5 = Order.create(name: "Mr. Roger", address: "The Neighborhood", city: "Olympia", state: "Washington", zip: "90701")
-  item_order_12 = ItemOrder.create(order: order_5, item: pull_toy, quantity: 4, price: pull_toy.price, user: regular_user_2)
-  item_order_13 = ItemOrder.create(order: order_5, item: dog_bone, quantity: 3, price: dog_bone.price, user: regular_user_2)
+order_5 = FactoryBot.create(:order)
+  item_order_12 = ItemOrder.create(order: order_5, item: pull_toy, quantity: 4, price: pull_toy.price, user: user_2)
+  item_order_13 = ItemOrder.create(order: order_5, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_2)
