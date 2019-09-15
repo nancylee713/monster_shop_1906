@@ -2,16 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "Merchant Users" do
   before :each do
-    @merchant_user = User.create!(name: "Michael Scott",
-                  address: "1725 Slough Ave",
-                  city: "Scranton",
-                  state: "PA",
-                  zipcode: "18501",
-                  email: "michael.s@email.com",
-                  password: "WorldBestBoss",
-                  role: 2)
+    @merchant_admin = create(:merchant_admin)
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
   end
 
   it "cannot access admin paths" do

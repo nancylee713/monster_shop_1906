@@ -7,13 +7,7 @@ RSpec.describe 'Cart show' do
         @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
         @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
-        @regular_user = User.create!(name: "George Jungle",
-                      address: "1 Jungle Way",
-                      city: "Jungleopolis",
-                      state: "FL",
-                      zipcode: "77652",
-                      email: "junglegeorge@email.com",
-                      password: "Tree123")
+        @regular_user = create(:user)
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@regular_user)
 
@@ -71,13 +65,7 @@ RSpec.describe 'Cart show' do
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       before :each do
-        regular_user = User.create!(name: "George Jungle",
-                      address: "1 Jungle Way",
-                      city: "Jungleopolis",
-                      state: "FL",
-                      zipcode: "77652",
-                      email: "junglegeorge@email.com",
-                      password: "Tree123")
+        regular_user = create(:user)
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user)
       end

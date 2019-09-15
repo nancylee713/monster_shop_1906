@@ -2,32 +2,54 @@
 <center>
   <h3>Please enter your details to sign up:</h3><br>
 
-  <%= form_for(@user, url: register_path) do |f| %>
+  <%= form_with(model: @user, url: register_path, local: true, scope: "user") do |f| %>
+    <p class='display-4'>Account Info</p>
+    <%= f.label :name %>
+    <%= f.text_field :name, id: :name %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+    <%= f.label :email %>
+    <%= f.text_field :email, id: :email, value: nil %>
 
-      <%= f.label :address %>
-      <%= f.text_field :address %>
+    <%= f.label :password %>
+    <%= f.password_field :password, id: :password, value: nil %>
 
-      <%= f.label :city %>
-      <%= f.text_field :city %>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, id: :password_confirmation, value: nil %>
 
-      <%= f.label :state %>
-      <%= f.text_field :state %>
+    <p class='display-4'>Main Address</p>
+      <%= f.fields_for :addresses do |address| %>
+        <%= render 'address', f: address %>
+      <% end %>
 
-      <%= f.label :zipcode %>
-      <%= f.text_field :zipcode %>
-
-      <%= f.label :email %>
-      <%= f.text_field :email, value: nil %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, value: nil %>
-
-      <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, value: nil %>
-
-      <%= f.submit 'Submit' %>
+    <%= f.submit %>
   <% end %>
+
+  <!-- < %= form_for(@user, url: register_path) do |f| %>
+
+      < %= f.label :name %>
+      < %= f.text_field :name %>
+
+      < %= f.label :address %>
+      < %= f.text_field :address %>
+
+      < %= f.label :city %>
+      < %= f.text_field :city %>
+
+      < %= f.label :state %>
+      < %= f.text_field :state %>
+
+      < %= f.label :zipcode %>
+      < %= f.text_field :zipcode %>
+
+      < %= f.label :email %>
+      < %= f.text_field :email, value: nil %>
+
+      < %= f.label :password %>
+      < %= f.password_field :password, value: nil %>
+
+      < %= f.label :password_confirmation %>
+      < %= f.password_field :password_confirmation, value: nil %>
+
+      < %= f.submit 'Submit' %>
+  < % end %> -->
 </center>

@@ -8,10 +8,11 @@ class UsersController< ApplicationController
 
   def new
     @user = User.new
+    @user.addresses.build(nickname: "home")
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.create(user_params)
     if @user.save
       session[:user_id] = @user.id
       flash[:success] = "Welcome #{@user.name}! You are now registered and logged in."
@@ -66,6 +67,6 @@ class UsersController< ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :address, :city, :state, :zipcode, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, addresses_attributes: [:id, :nickname, :name, :street, :city, :state, :zipcode])
   end
 end

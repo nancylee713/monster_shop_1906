@@ -19,13 +19,7 @@ RSpec.describe 'Site Navigation' do
     end
 
     it "I can see a cart indicator on all pages and click link" do
-      regular_user = User.create!(name: "George Jungle",
-                    address: "1 Jungle Way",
-                    city: "Jungleopolis",
-                    state: "FL",
-                    zipcode: "77652",
-                    email: "junglegeorge@email.com",
-                    password: "Tree123")
+      regular_user = create(:user)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user)
 
@@ -78,13 +72,7 @@ RSpec.describe 'Site Navigation' do
 
   describe "As a Registered User" do
     it "I see profile and logout links but not login and register links on navigation bar" do
-      regular_user = User.create!(name: "George Jungle",
-                    address: "1 Jungle Way",
-                    city: "Jungleopolis",
-                    state: "FL",
-                    zipcode: "77652",
-                    email: "junglegeorge@email.com",
-                    password: "Tree123")
+      regular_user = create(:user)
 
       visit '/login'
 
@@ -113,14 +101,7 @@ RSpec.describe 'Site Navigation' do
 
   describe "As an Admin User" do
     it "I see appropriate links in the nav bar" do
-      admin_user = User.create!(name: "Leslie Knope",
-                    address: "14 Somewhere Ave",
-                    city: "Pawnee",
-                    state: "IN",
-                    zipcode: "18501",
-                    email: "recoffice@email.com",
-                    password: "Waffles",
-                    role: 3)
+      admin_user = create(:admin)
 
       visit '/login'
 
@@ -151,27 +132,9 @@ RSpec.describe 'Site Navigation' do
 
   describe "As a Merchant Employee/Admin" do
       before :each do
-        @bike_shop = Merchant.create!(name: "Brian's Bike Shop",
-                    address: '123 Bike Rd.',
-                    city: 'Richmond',
-                    state: 'VA',
-                    zip: 23137)
-        @merchant_user = @bike_shop.users.create!(name: "Michael Scott",
-          address: "1725 Slough Ave",
-          city: "Scranton",
-          state: "PA",
-          zipcode: "18501",
-          email: "michael.s@email.com",
-          password: "WorldBestBoss",
-          role: 2)
-        @merchant_employee = @bike_shop.users.create!(name: "Dwight Schrute",
-          address: "175 Beet Rd",
-          city: "Scranton",
-          state: "PA",
-          zipcode: "18501",
-          email: "dwightkschrute@email.com",
-          password: "IdentityTheftIsNotAJoke",
-          role: 1)
+        @bike_shop = create(:merchant)
+        @merchant_employee = create(:merchant_employee, merchant: @bike_shop)
+        @merchant_admin = create(:merchant_admin, merchant: @bike_shop)
       end
 
       it "I see profile, logout, and merchant dashboard links on navigation bar" do
@@ -181,8 +144,8 @@ RSpec.describe 'Site Navigation' do
           click_link('Login')
         end
 
-        fill_in :email, with: @merchant_user.email
-        fill_in :password, with: @merchant_user.password
+        fill_in :email, with: @merchant_admin.email
+        fill_in :password, with: @merchant_admin.password
 
         click_button "Submit"
 
@@ -197,7 +160,7 @@ RSpec.describe 'Site Navigation' do
         end
 
         expect(current_path).to eq('/merchant')
-        expect(page).to have_content("Logged in as #{@merchant_user.name}")
+        expect(page).to have_content("Logged in as #{@merchant_admin.name}")
 
         click_link "Logout"
 

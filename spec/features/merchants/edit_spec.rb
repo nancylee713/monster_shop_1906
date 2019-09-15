@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "As an admin user" do
   describe "After visiting a merchants show page and clicking on updating that merchant" do
     before :each do
-      admin = create(:user, role: 3)
+      admin = create(:admin)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)

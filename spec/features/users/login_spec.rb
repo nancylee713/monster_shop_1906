@@ -2,42 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "User Login" do
   before :each do
-    @bike_shop = Merchant.create!(name: "Brian's Bike Shop",
-                address: '123 Bike Rd.',
-                city: 'Richmond',
-                state: 'VA',
-                zip: 23137)
-    @regular_user = User.create!(name: "George Jungle",
-                  address: "1 Jungle Way",
-                  city: "Jungleopolis",
-                  state: "FL",
-                  zipcode: "77652",
-                  email: "junglegeorge@email.com",
-                  password: "Tree123")
-    @merchant_employee = @bike_shop.users.create!(name: "Dwight Schrute",
-                  address: "175 Beet Rd",
-                  city: "Scranton",
-                  state: "PA",
-                  zipcode: "18501",
-                  email: "dwightkschrute@email.com",
-                  password: "IdentityTheftIsNotAJoke",
-                  role: 1)
-    @merchant_user = @bike_shop.users.create!(name: "Michael Scott",
-                  address: "1725 Slough Ave",
-                  city: "Scranton",
-                  state: "PA",
-                  zipcode: "18501",
-                  email: "michael.s@email.com",
-                  password: "WorldBestBoss",
-                  role: 2)
-    @admin_user = User.create!(name: "Leslie Knope",
-                  address: "14 Somewhere Ave",
-                  city: "Pawnee",
-                  state: "IN",
-                  zipcode: "18501",
-                  email: "recoffice@email.com",
-                  password: "Waffles",
-                  role: 3)
+    @bike_shop = create(:merchant)
+    @regular_user = create(:user)
+    @merchant_employee = create(:merchant_employee, merchant: @bike_shop)
+    @merchant_admin = create(:merchant_admin, merchant: @bike_shop)
+    @admin_user = create(:admin)
   end
 
   it "can log in a regular user" do
@@ -77,13 +46,13 @@ RSpec.describe "User Login" do
   it "can log in a merchant user" do
     visit "/login"
 
-    fill_in :email, with: @merchant_user.email
-    fill_in :password, with: @merchant_user.password
+    fill_in :email, with: @merchant_admin.email
+    fill_in :password, with: @merchant_admin.password
 
     click_button "Submit"
 
     expect(current_path).to eq("/merchant")
-    expect(page).to have_content("Logged in as #{@merchant_user.name}")
+    expect(page).to have_content("Logged in as #{@merchant_admin.name}")
 
     visit "/login"
 
@@ -122,7 +91,7 @@ RSpec.describe "User Login" do
     visit "/login"
 
     fill_in :email, with: ""
-    fill_in :password, with: @merchant_user.password
+    fill_in :password, with: @merchant_admin.password
 
     click_button "Submit"
 

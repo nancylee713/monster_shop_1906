@@ -2,13 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "User Profile" do
   before :each do
-    @regular_user = User.create!(name: "George Jungle",
-                  address: "1 Jungle Way",
-                  city: "Jungleopolis",
-                  state: "FL",
-                  zipcode: "77652",
-                  email: "junglegeorge@email.com",
-                  password: "Tree123")
+    @regular_user = create(:user)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@regular_user)
     visit '/profile'
@@ -23,19 +17,13 @@ RSpec.describe "User Profile" do
     expect(current_path).to eq("/profile/edit")
 
     fill_in "Name", with: "Adam Smith"
-    fill_in "Address", with: "1234 Happy St"
-    fill_in "City", with: "Denver"
-    fill_in "State", with: "CO"
-    fill_in "Zipcode", with: "80204"
     fill_in "Email", with: "chicken@email.com"
 
     click_button "Update Profile"
 
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Adam Smith")
-    expect(page).to have_content("1234 Happy St")
-    expect(page).to have_content("Denver")
-    expect(page).to have_content("CO")
+    expect(page).to have_content("#{@regular_user.default_address}")
     expect(page).to have_content("chicken@email.com")
     expect(page).to have_content("Your profile has been updated")
   end
@@ -47,16 +35,12 @@ RSpec.describe "User Profile" do
     end
 
     fill_in "Name", with: "Adam Smith"
-    fill_in "Address", with: "1234 Happy St"
-    fill_in "City", with: ""
-    fill_in "State", with: "CO"
-    fill_in "Zipcode", with: ""
-    fill_in "Email", with: "chicken@email.com"
+    fill_in "Email", with: ""
 
     click_button "Update Profile"
 
     expect(current_path).to eq("/profile/edit")
-    expect(page).to have_content("City can't be blank and Zipcode can't be blank")
+    expect(page).to have_content("Email can't be blank")
   end
 
   it 'user cannot enter invalid email' do
@@ -65,10 +49,6 @@ RSpec.describe "User Profile" do
     end
 
     fill_in "Name", with: "Adam Smith"
-    fill_in "Address", with: "1234 Happy St"
-    fill_in "City", with: "Denver"
-    fill_in "State", with: "CO"
-    fill_in "Zipcode", with: "80205"
     fill_in "Email", with: "waffle"
 
     click_button "Update Profile"

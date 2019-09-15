@@ -23,22 +23,30 @@
               <tr>
                 <td><%= item.name %> </td>
                   <td>#<%= item.id %></td>
-                <td><img id='thumbnail-<%= item.id %>'><%= image_tag item.image, onerror: 'this.error=null;this.src="https://avatars3.githubusercontent.com/u/6475745?s=88&v=4"', class: 'img_thumbnail' %></img></td>
+                <td>
+                  <% if item.image.present? %>
+                    <img id='thumbnail-<%= item.id %>'><%= image_tag item.image, class: 'img_thumbnail' %></img>
+                  <% else %>
+                    <img id='thumbnail-<%= item.id %>'><%= image_tag "https://avatars3.githubusercontent.com/u/6475745?s=88&v=4", class: 'img_thumbnail' %></img>
+                  <% end %>
+                </td>
                 <td><%= item.description %></td>
                 <td><%= number_to_currency(item.price) %></td>
                 <td><%= item.inventory %></td>
-                <td><% if item.active? %>
-                  <p>Active</p>
-                  <% if current_merchant_admin? %>
-                    <%= link_to "Deactivate", "/merchant/items/#{item.id}/update_status", method: :patch, class: "btn btn-danger item-buttons"%>
+                <td>
+                  <% if item.active? %>
+                    <p>Active</p>
+                    <% if current_merchant_admin? %>
+                      <%= link_to "Deactivate", "/merchant/items/#{item.id}/update_status", method: :patch, class: "btn btn-danger item-buttons"%>
+                    <% end %>
+                  <% else %>
+                    <p>Inactive</p>
+                      <% if current_merchant_admin? %>
+                        <%= link_to "Activate", "/merchant/items/#{item.id}/update_status", method: :patch, class: "btn btn-success item-buttons"%>
+                      <% end %>
                   <% end %>
-                <% else %>
-                  <p>Inactive</p>
-                  <% if current_merchant_admin? %>
-                    <%= link_to "Activate", "/merchant/items/#{item.id}/update_status", method: :patch, class: "btn btn-success item-buttons"%>
-                  <% end %>
-                <% end %></td>
-                <td><%= link_to "Edit", edit_merchant_user_path(item) %></td>
+                </td>
+                <td><%= link_to "Edit", "/merchant/items/#{item.id}/edit" %></td>
                 <% if item.no_orders? %>
                   <td><%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger item-buttons" %></td>
                 <% end %>

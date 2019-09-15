@@ -11,16 +11,13 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def new
-    @item = Item.new
+    @item = @merchant.items.new
   end
 
   def create
     @item = @merchant.items.create(item_params)
 
     if @item.save
-      if @item.image.blank?
-        @item.update(image: "https://avatars3.githubusercontent.com/u/6475745?s=88&v=4")
-      end
       flash[:new_item] = "Your new item is saved!"
       redirect_to merchant_user_index_path
     else
@@ -46,7 +43,8 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def update_status
-    @item = Item.find(params[:item_id])
+    # @item = Item.find(params[:item_id])
+    @item = @merchant.items.find(params[:item_id])
     @item.toggle_status
     if @item.active?
       flash[:success] = "This item is now available for sale"
@@ -67,6 +65,10 @@ class Merchant::ItemsController < Merchant::BaseController
   private
 
   def item_params
-    params.require(:item).permit(:name,:description,:price,:inventory,:image)
+    if params[:item]
+      params.require(:item).permit(:name,:description,:price,:inventory,:image)
+    else
+      params.permit(:name,:description,:price,:inventory,:image)
+    end
   end
 end

@@ -4,41 +4,19 @@ require 'rails_helper'
 RSpec.describe "Show Merchant Dashboard" do
   describe "As a merchant employee or admin" do
     before :each do
-      @bike_shop = Merchant.create!(name: "Brian's Bike Shop",
-                  address: '123 Bike Rd.',
-                  city: 'Richmond',
-                  state: 'VA',
-                  zip: 23137)
+      @bike_shop = create(:merchant)
 
-      @chain = @bike_shop.items.create!(name: "Chain",
-                description: "It'll never break!",
-                price: 50,
-                image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588",
-                inventory: 5)
-
-      @tire = @bike_shop.items.create(name: "Gatorskins",
-              description: "They'll never pop!",
-              price: 100,
-              image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588",
-              inventory: 12)
-
-      @merchant_user = @bike_shop.users.create!(name: "Michael Scott",
-                    address: "1725 Slough Ave",
-                    city: "Scranton",
-                    state: "PA",
-                    zipcode: "18501",
-                    email: "michael.s@email.com",
-                    password: "WorldBestBoss",
-                    password_confirmation: "WorldBestBoss",
-                    role: 2)
+      @chain = create(:item, merchant: @bike_shop)
+      @tire = create(:item, merchant: @bike_shop)
+      @merchant_admin = create(:merchant_admin, merchant: @bike_shop)
 
     end
 
     it "When I visit my merchant dashboard, I see the name and full address of the merchant I work for" do
       visit "/login"
 
-      fill_in :email, with: @merchant_user.email
-      fill_in :password, with: @merchant_user.password
+      fill_in :email, with: @merchant_admin.email
+      fill_in :password, with: @merchant_admin.password
 
       click_button "Submit"
 
@@ -57,8 +35,8 @@ RSpec.describe "Show Merchant Dashboard" do
 
       visit login_path
 
-      fill_in "Email", with: @merchant_user.email
-      fill_in "Password", with: @merchant_user.password
+      fill_in "Email", with: @merchant_admin.email
+      fill_in "Password", with: @merchant_admin.password
 
       click_on "Submit"
 
@@ -67,7 +45,7 @@ RSpec.describe "Show Merchant Dashboard" do
         expect(page).to have_link("Order ##{order_1.id}")
         expect(page).to have_content(order_1.created_at.strftime('%D'))
         expect(page).to have_content(order_1.total_items)
-        expect(page).to have_content("$150")
+        expect(page).to have_content(order_1.grandtotal)
       end
     end
   end
