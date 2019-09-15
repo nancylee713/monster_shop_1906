@@ -37,7 +37,6 @@ describe ItemOrder, type: :model do
 
       merchant_2 = create(:merchant)
       item_3 = merchant_2.items.create!(attributes_for(:item, inventory: 20))
-      item_4 = merchant_2.items.create!(attributes_for(:item, inventory: 0))
 
       @order_1 = create(:order, status: "pending")
         @item_order_1 = user.item_orders.create!(order: @order_1, item: item_1, quantity: 1, price: item_1.price, fulfilled?: false)
