@@ -1,32 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe "Registering User" do
+  before(:each) do
+    @user_name = "Larry Pug"
+    @user_email = "larrypug@email.com"
+    @user_password = "password123"
+    @user_confirm_password = "password123"
+    @street = "123 Sesame St"
+    @city = "Denver"
+    @state = "CO"
+    @zipcode = "80222"
+    @nickname = "home"
+  end
+
   it "creates new user" do
     visit "/register"
 
-    user_name = "Larry Pug"
-    user_address = "123 Sesame St"
-    user_city = "Denver"
-    user_state = "CO"
-    user_zipcode = "80222"
-    user_email = "larrypug@email.com"
-    user_password = "password123"
-    user_confirm_password = "password123"
+    fill_in "name", with: @user_name
+    fill_in "email", with: @user_email
+    fill_in "password", with: @user_password
+    fill_in "password_confirmation", with: @user_confirm_password
+    fill_in "street", with: @street
+    fill_in "city", with: @city
+    fill_in "state", with: @state
+    fill_in "zipcode", with: @zipcode
+    fill_in "nickname", with: @nickname
 
-    fill_in "Name", with: user_name
-    fill_in "Address", with: user_address
-    fill_in "City", with: user_city
-    fill_in "State", with: user_state
-    fill_in "Zipcode", with: user_zipcode
-    fill_in "Email", with: user_email
-    fill_in "Password", with: user_password
-    fill_in "Password confirmation", with: user_confirm_password
-
-    click_on "Submit"
+    click_on "Create User"
 
     expect(current_path).to eq("/profile")
-    expect(page).to have_content("Welcome #{user_name}! You are now registered and logged in.")
-    expect(page).to have_content("Hello, #{user_name}!")
+    expect(page).to have_content("Welcome #{@user_name}! You are now registered and logged in.")
+    expect(page).to have_content("Hello, #{@user_name}!")
     expect(page).to_not have_link("Login")
     expect(page).to_not have_link("Register")
   end
@@ -35,76 +39,59 @@ RSpec.describe "Registering User" do
 
     visit "/register"
 
-    click_on "Submit"
+    click_on "Create User"
 
     expect(current_path).to eq("/register")
-    expect(page).to have_content("Name can't be blank")
-    expect(page).to have_content("Address can't be blank")
-    expect(page).to have_content("City can't be blank")
-    expect(page).to have_content("State can't be blank")
-    expect(page).to have_content("Zipcode can't be blank")
-    expect(page).to have_content("Email can't be blank")
-    expect(page).to have_content("Email is invalid")
-    expect(page).to have_content("Password can't be blank")
+    expect(page).to have_content("Password can't be blank, Name can't be blank, Email can't be blank, Email is invalid, Password confirmation doesn't match Password, Addresses street can't be blank, Addresses city can't be blank, Addresses state can't be blank, and Addresses zipcode can't be blank")
   end
 
   it "confirms passwords match" do
     visit "/register"
 
-    user_name = "Larry Pug"
-    user_address = "123 Sesame St"
-    user_city = "Denver"
-    user_state = "CO"
-    user_zipcode = "80222"
-    user_email = "larrypug@email.com"
     user_password = "password123"
     user_confirm_password = "password456"
 
-    fill_in "Name", with: user_name
-    fill_in "Address", with: user_address
-    fill_in "City", with: user_city
-    fill_in "State", with: user_state
-    fill_in "Zipcode", with: user_zipcode
-    fill_in "Email", with: user_email
-    fill_in "Password", with: user_password
-    fill_in "Password confirmation", with: user_confirm_password
+    fill_in "name", with: @user_name
+    fill_in "email", with: @user_email
+    fill_in "password", with: user_password
+    fill_in "password_confirmation", with: user_confirm_password
+    fill_in "street", with: @street
+    fill_in "city", with: @city
+    fill_in "state", with: @state
+    fill_in "zipcode", with: @zipcode
+    fill_in "nickname", with: @nickname
 
-    click_on "Submit"
+
+    click_on "Create User"
 
     expect(page).to have_content("Password confirmation doesn't match")
   end
 
   it "doesn't allow duplicate email registrations and returns me to the registration page with a filled-out form, without saving my details and I see a flash message saying that email is already in use" do
-
-    regular_user = User.create!(name: "George Jungle",
-                  address: "1 Jungle Way",
-                  city: "Jungleopolis",
-                  state: "FL",
-                  zipcode: "77652",
-                  email: "junglegeorge@email.com",
-                  password: "Tree123")
+    user = create(:user)
 
     visit "/register"
 
-    fill_in "Name", with: "George Jungle"
-    fill_in "Address", with: "1 Jungle Way"
-    fill_in "City", with: "Jungleopolis"
-    fill_in "State", with: "FL"
-    fill_in "Zipcode", with: "77652"
-    fill_in "Email", with: "junglegeorge@email.com"
-    fill_in "Password", with: "Tree123"
-    fill_in "Password confirmation", with: "Tree123"
+    fill_in "name", with: @user_name
+    fill_in "email", with: user.email
+    fill_in "password", with: @user_password
+    fill_in "password_confirmation", with: @user_confirm_password
+    fill_in "street", with: @street
+    fill_in "city", with: @city
+    fill_in "state", with: @state
+    fill_in "zipcode", with: @zipcode
+    fill_in "nickname", with: @nickname
 
-    click_on "Submit"
+    click_on "Create User"
 
     expect(page).to have_content("Email has already been taken")
 
-    expect(find_field('Name').value).to eq "George Jungle"
-    expect(find_field('Address').value).to eq "1 Jungle Way"
-    expect(find_field('City').value).to eq "Jungleopolis"
-    expect(find_field('State').value).to eq "FL"
-    expect(find_field('Zipcode').value).to eq "77652"
-    expect(find_field('Email').value).to eq nil
-    expect(find_field('Password').value).to eq nil
+    expect(find_field('name').value).to eq @user_name
+    expect(find_field('street').value).to eq @street
+    expect(find_field('city').value).to eq @city
+    expect(find_field('state').value).to eq @state
+    expect(find_field('zipcode').value).to eq @zipcode
+    expect(find_field('email').value).to eq nil
+    expect(find_field('password').value).to eq nil
   end
 end
