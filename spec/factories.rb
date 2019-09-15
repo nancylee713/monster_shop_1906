@@ -1,16 +1,56 @@
 FactoryBot.define do
   factory :user do
-    name { Faker::Name.name }
-    address { Faker::Address.street_address }
-    city { Faker::Address.city }
-    state { Faker::Address.state }
-    zipcode { Faker::Address.zip_code }
-    email { Faker::Internet.safe_email }
-    password { Faker::Lorem.word }
+    before(:create) do |user|
+      user.addresses << create(:address, user: user)
+    end
+
+    sequence(:name) { |n| "user-#{n}"}
+    sequence(:email) { |n| "email-#{n}@email.com" }
+    password { "password" }
+    merchant
+  end
+
+  factory :address do
+    sequence(:street) { |n| "street-#{n}"}
+    city { "Denver" }
+    state { "CO" }
+    zipcode { "80202" }
+    nickname { "home" }
+    user
+  end
+
+  factory :merchant_employee, class: User do
+    name { "merchant_employee" }
+    sequence(:email) { |n| "me-#{n}@email.com" }
+    password { "password" }
+    role { 1 }
+  end
+
+  factory :merchant_admin, class: User do
+    name { "merchant_admin" }
+    sequence(:email) { |n| "ma-#{n}@email.com" }
+    password { "password" }
+    role { 2 }
+  end
+
+  factory :admin, class: User do
+    name { "admin" }
+    sequence(:email) { |n| "admin-#{n}@email.com" }
+    password { "password" }
+    role { 3 }
   end
 
   factory :order do
-    name { Faker::Name.name }
+    sequence(:name) { |n| "order-#{n}"}
+    address { Faker::Address.street_address }
+    city { Faker::Address.city }
+    state { Faker::Address.state }
+    zip { Faker::Address.zip }
+    status { 1 }
+  end
+
+  factory :merchant do
+    sequence(:name) { |n| "shop-#{n}"}
     address { Faker::Address.street_address }
     city { Faker::Address.city }
     state { Faker::Address.state }
@@ -18,26 +58,18 @@ FactoryBot.define do
   end
 
   factory :item do
-    name { Faker::Name.name }
-    description { Faker::Lorem.word }
+    sequence(:name) { |n| "item-#{n}" }
+    sequence(:description) { |n| "description-#{n}" }
     price { Faker::Number.decimal(l_digits: 2) }
     image { Faker::LoremFlickr.image(size: "50x60") }
     inventory { Faker::Number.between(from: 1, to: 100) }
+    merchant
   end
 
-  factory :merchant do
-    name { Faker::Name.name }
-    address { Faker::Address.street_address }
-    city { Faker::Address.city }
-    state { Faker::Address.state }
-    zip { Faker::Address.zip }
-  end
-
-  factory :address do
-    name { Faker::Name.name }
-    address { Faker::Address.street_address }
-    city { Faker::Address.city }
-    state { Faker::Address.state }
-    zipcode { Faker::Address.zip_code }
+  factory :review do
+    sequence(:title) { |n| "title-#{n}" }
+    sequence(:content) { |n| "content-#{n}" }
+    sequence(:rating) { Faker::Number.between(from: 1, to: 5) }
+    item
   end
 end
