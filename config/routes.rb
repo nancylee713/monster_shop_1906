@@ -51,6 +51,12 @@ Rails.application.routes.draw do
   get "/profile/orders/new", to: "orders#new"
   get "/profile/orders/:id", to: "users#show_order"
 
+  get "/profile/addresses/new", to: "addresses#new"
+  post "/profile/addresses", to: "addresses#create"
+  get "/profile/addresses/:id/edit", to: "addresses#edit"
+  patch "/profile/addresses/:id", to: "addresses#update"
+  delete "/profile/addresses/:id", to: "addresses#destroy"
+
   post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"

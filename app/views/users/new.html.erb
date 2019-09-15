@@ -2,7 +2,7 @@
 <center>
   <h3>Please enter your details to sign up:</h3><br>
 
-  <%= form_with(model: @user, url: register_path, local: true, scope: "user") do |f| %>
+  <%= form_with(model: @user, url: register_path) do |f| %>
     <p class='display-4'>Account Info</p>
     <%= f.label :name %>
     <%= f.text_field :name, id: :name %>
