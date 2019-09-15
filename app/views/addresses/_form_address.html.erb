@@ -1,0 +1,6 @@
+<center>
+  <%= form_for(@address, url: path) do |form| %>
+    <%= render partial: 'users/address', locals:{ f: form } %>
+    <%= form.submit %>
+  <% end %>
+</center>
