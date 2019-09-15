@@ -41,7 +41,10 @@
                <%= address.street %><br>
                 <%= address.city %>, <%= address.state %> <%= address.zipcode %>
              </p>
-             <p><%= link_to "Edit", "/profile/addresses/#{address.id}/edit" %></p>
+             <p>
+               <%= link_to "Edit", "/profile/addresses/#{address.id}/edit" %> |
+               <%= link_to "Delete", "/profile/addresses/#{address.id}", method: :delete, data: { confirm: 'Are you sure?' } %>
+             </p>
            </div>
          </div>
        </div>

@@ -1,6 +1,6 @@
 class AddressesController<ApplicationController
   before_action :set_user
-  before_action :set_address, only: [:edit, :update]
+  before_action :set_address, only: [:edit, :update, :destroy]
 
   def set_address
     @address = @user.addresses.find(params[:id])
@@ -37,6 +37,13 @@ class AddressesController<ApplicationController
       flash[:error] = @address.errors.full_messages.to_sentence
       render :edit
     end
+  end
+
+  def destroy
+    @user.addresses.delete(@address)
+    @address.destroy
+    flash[:delete_item_warning] = "Your #{@address.nickname} address is now deleted!"
+    redirect_to profile_path
   end
 
   private
