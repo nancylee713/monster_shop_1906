@@ -41,30 +41,38 @@ dundie_reviews = FactoryBot.create_list(:review, 5, item: dundie)
 
 #users
 user_1 = FactoryBot.create(:user)
+address_1 = FactoryBot.create(:address, nickname: "work 1")
+address_2 = FactoryBot.create(:address, nickname: "work 2")
+
 user_2 = FactoryBot.create(:user)
+address_3 = FactoryBot.create(:address, nickname: "dorm 1")
+address_4 = FactoryBot.create(:address, nickname: "dorm 2")
+address_5 = FactoryBot.create(:address, nickname: "dorm 3")
+
+
 merchant_employee = FactoryBot.create(:merchant_employee)
 merchant_admin = FactoryBot.create(:merchant_admin)
 admin = FactoryBot.create(:admin)
 
-order_1 = FactoryBot.create(:order, status: 0)
+order_1 = FactoryBot.create(:order, user: user_1, address: address_1, status: 0)
   item_order_1 = ItemOrder.create!(order: order_1, item: tire, quantity: 2, price: tire.price, user: user_1, fulfilled?: 0)
   item_order_2 = ItemOrder.create!(order: order_1, item: bike, quantity: 5, price: bike.price, user: user_1, fulfilled?: 0)
   item_order_3 = ItemOrder.create!(order: order_1, item: watch, quantity: 5, price: watch.price, user: user_1, fulfilled?: 0)
 
-order_2 = FactoryBot.create(:order, status: 0)
+order_2 = FactoryBot.create(:order, user: user_2, address: address_3, status: 0)
   item_order_4 = ItemOrder.create(order: order_2, item: bike, quantity: 12, price: bike.price, user: user_2)
   item_order_5 = ItemOrder.create(order: order_2, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_2)
 
-order_3 = FactoryBot.create(:order)
+order_3 = FactoryBot.create(:order, user: user_1, address: address_2)
   item_order_6 = ItemOrder.create(order: order_3, item: pull_toy, quantity: 4, price: pull_toy.price, user: user_1)
   item_order_7 = ItemOrder.create(order: order_3, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_1)
   item_order_8 = ItemOrder.create(order: order_3, item: tire, quantity: 1, price: tire.price, user: user_1)
   item_order_9 = ItemOrder.create(order: order_3, item: bike, quantity: 1, price: bike.price, user: user_1)
 
-order_4 = FactoryBot.create(:order)
+order_4 = FactoryBot.create(:order, user: user_2, address: address_4)
   item_order_10 = ItemOrder.create(order: order_4, item: pull_toy, quantity: 4, price: pull_toy.price, user: user_2)
   item_order_11 = ItemOrder.create(order: order_4, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_2)
 
-order_5 = FactoryBot.create(:order)
+order_5 = FactoryBot.create(:order, user: user_2, address: address_5)
   item_order_12 = ItemOrder.create(order: order_5, item: pull_toy, quantity: 4, price: pull_toy.price, user: user_2)
   item_order_13 = ItemOrder.create(order: order_5, item: dog_bone, quantity: 3, price: dog_bone.price, user: user_2)
