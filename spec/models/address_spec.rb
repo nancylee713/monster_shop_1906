@@ -23,7 +23,7 @@ describe Address, type: :model do
       expect(address.to_s).to eq("street-1, Denver, CO, 80202")
     end
 
-    it 'can_be_deleted?' do
+    it 'can_be_updated??' do
       user = User.create!(name: 'user-1', email: 'email-1@email.com', password: 'password')
       home_address = user.addresses.create!(id: 1, street: 'street-1', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'home')
       dorm_address = user.addresses.create!(id: 2, street: 'street-2', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'dorm')
@@ -31,8 +31,8 @@ describe Address, type: :model do
       order_2 = create(:order, user: user, address: home_address, status: 1)
       order_3 = create(:order, user: user, address: home_address, status: 2)
 
-      expect(dorm_address.can_be_deleted?).to eq(true)
-      expect(home_address.can_be_deleted?).to eq(false)
+      expect(dorm_address.can_be_updated?).to eq(true)
+      expect(home_address.can_be_updated?).to eq(false)
     end
   end
 end

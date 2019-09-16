@@ -27,6 +27,10 @@ class AddressesController<ApplicationController
   end
 
   def edit
+    unless @address.can_be_updated?
+      flash[:warning] = "This address has been already used in a shipped order and cannot be edited at this time."
+      redirect_to profile_path
+    end
   end
 
   def update
@@ -41,7 +45,7 @@ class AddressesController<ApplicationController
   end
 
   def destroy
-    if @address.can_be_deleted?
+    if @address.can_be_updated?
       flash[:delete_item_warning] = "Your #{@address.nickname} address is now deleted!"
       @address.destroy
     else

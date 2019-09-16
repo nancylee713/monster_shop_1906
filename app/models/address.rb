@@ -14,7 +14,7 @@ class Address < ApplicationRecord
       .join(', ')
   end
 
-  def can_be_deleted?
+  def can_be_updated?
     self.orders.empty? || self.orders.where(status: :shipped).empty?
   end
 end
