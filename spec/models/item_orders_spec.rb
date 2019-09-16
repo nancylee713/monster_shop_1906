@@ -21,7 +21,7 @@ describe ItemOrder, type: :model do
       user = create(:user)
       meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_1 = create(:order, user: user, address: create(:address))
       item_order_1 = user.item_orders.create!(order: order_1, item: tire, price: tire.price, quantity: 2)
 
       expect(item_order_1.subtotal).to eq(200)
@@ -31,6 +31,7 @@ describe ItemOrder, type: :model do
   describe 'class methods' do
     before(:each) do
       user = create(:user)
+      address = create(:address)
       merchant_1 = create(:merchant)
       item_1 = merchant_1.items.create!(attributes_for(:item, inventory: 10, price: 10))
       item_2 = merchant_1.items.create!(attributes_for(:item, inventory: 4, price: 30))
@@ -38,11 +39,11 @@ describe ItemOrder, type: :model do
       merchant_2 = create(:merchant)
       item_3 = merchant_2.items.create!(attributes_for(:item, inventory: 20))
 
-      @order_1 = create(:order, status: "pending")
+      @order_1 = create(:order, user: user, address: address, status: "pending")
         @item_order_1 = user.item_orders.create!(order: @order_1, item: item_1, quantity: 1, price: item_1.price, fulfilled?: false)
         @item_order_2 = user.item_orders.create!(order: @order_1, item: item_2, quantity: 3, price: item_2.price, fulfilled?: false)
 
-      @order_2 = create(:order, status: "pending")
+      @order_2 = create(:order, user: user, address: address, status: "pending")
         @item_order_3 = user.item_orders.create!(order: @order_2, item: item_3, quantity: 1, price: item_3.price, fulfilled?: false)
         @item_order_4 = user.item_orders.create!(order: @order_2, item: item_2, quantity: 10000, price: item_2.price, fulfilled?: false)
     end

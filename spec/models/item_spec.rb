@@ -20,6 +20,8 @@ describe Item, type: :model do
   describe "instance methods" do
     before(:each) do
       @user = create(:user)
+      address_1 = create(:address)
+      address_2 = create(:address)
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
       @bike = @bike_shop.items.create(name: "Bike", description: "You can ride it!", price: 200, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 0)
@@ -31,8 +33,8 @@ describe Item, type: :model do
       @review_4 = @chain.reviews.create(title: "Not too impressed", content: "v basic bike shop", rating: 2)
       @review_5 = @chain.reviews.create(title: "Okay place :/", content: "Brian's cool and all but just an okay selection of items", rating: 3)
 
-      @order_1 = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: "pending")
-      @order_2 = Order.create(name: 'Mack', address: '123 Happy St', city: 'Denver', state: 'CO', zip: 80205, status: "pending")
+      @order_1 = create(:order, user: @user, address: address_1, status: "pending")
+      @order_2 = create(:order, user: @user, address: address_2, status: "pending")
         @item_order_1 = @user.item_orders.create!(order: @order_2, item: @watch, quantity: 2, price: @watch.price, user: @user, fulfilled?: false)
     end
 
