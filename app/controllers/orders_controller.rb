@@ -1,7 +1,12 @@
 class OrdersController <ApplicationController
 
   def new
-    @order = current_user.orders.new
+    if current_user.addresses.present?
+      @order = current_user.orders.new
+    else
+      flash[:no_address] = "There is currently no shipping address available. Please add a new address to proceed to checkout"
+      redirect_to profile_addresses_new_path
+    end
   end
 
   def cancel

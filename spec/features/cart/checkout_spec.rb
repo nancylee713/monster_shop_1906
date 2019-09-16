@@ -7,9 +7,8 @@ RSpec.describe 'Cart show' do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
       @regular_user = create(:user)
-
+      @default_address = @regular_user.addresses.create(attributes_for(:address, nickname: 'default'))
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@regular_user)
-
 
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
@@ -31,6 +30,19 @@ RSpec.describe 'Cart show' do
       click_on "Checkout"
 
       expect(current_path).to eq('/profile/orders/new')
+    end
+
+    describe "When I delete all addresses I cannot checkout" do
+      it "and I see an error telling me I need to add an address first" do
+        @regular_user.addresses.delete(@default_address)
+
+        visit "/cart"
+
+        click_link("Checkout")
+
+        expect(page).to have_content("There is currently no shipping address available. Please add a new address to proceed to checkout")
+        expect(current_path).to eq(profile_addresses_new_path)
+      end
     end
   end
 

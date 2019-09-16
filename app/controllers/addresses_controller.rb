@@ -41,6 +41,7 @@ class AddressesController<ApplicationController
 
   def destroy
     if @address.can_be_deleted?
+      @address.orders.destroy
       @user.addresses.delete(@address)
       @address.destroy
       flash[:delete_item_warning] = "Your #{@address.nickname} address is now deleted!"
