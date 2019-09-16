@@ -41,9 +41,9 @@ RSpec.describe "As an admin user" do
       pulltoy = brian.items.create(name: "Pulltoy", description: "It'll never fall apart!", price: 14, image: "https://www.valupets.com/media/catalog/product/cache/1/image/650x/040ec09b1e35df139433887a97daa66f/l/a/large_rubber_dog_pull_toy.jpg", inventory: 7)
 
       regular_user = create(:user)
+      address = create(:address, id: 1)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user)
-
 
       visit item_path(paper)
       click_on "Add To Cart"
@@ -57,17 +57,8 @@ RSpec.describe "As an admin user" do
       visit "/cart"
       click_on "Checkout"
 
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in "Name", with: name
-      fill_in "Address", with: address
-      fill_in "City", with: city
-      fill_in "State", with: state
-      fill_in "Zip", with: zip
+      fill_in "Name", with: "Bert"
+      find("option[value=1]").click
 
       click_button "Create Order"
 

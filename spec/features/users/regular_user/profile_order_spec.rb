@@ -3,12 +3,11 @@ require 'rails_helper'
 RSpec.describe "User Profile Order Page" do
   before :each do
     @user = create(:user)
-    address_1 = create(:address)
-    address_2 = create(:address)
+    address_1 = @user.addresses.create!(attributes_for(:address, id: 1))
+    address_2 = @user.addresses.create!(attributes_for(:address, id: 2))
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
     merchant_1 = create(:merchant)
-
     @item_1 = merchant_1.items.create!(attributes_for(:item))
     @item_2 = merchant_1.items.create!(attributes_for(:item))
 
@@ -34,10 +33,7 @@ RSpec.describe "User Profile Order Page" do
     click_on "Checkout"
 
     fill_in "Name", with: "Bert"
-    fill_in "Address", with: "123 Sesame St"
-    fill_in "City", with: "New York"
-    fill_in "State", with: "NY"
-    fill_in "Zip", with: 10022
+    find("option[value=1]").click
 
     click_on "Create Order"
 
@@ -83,11 +79,7 @@ RSpec.describe "User Profile Order Page" do
       expect(page).to have_content(@item_1.price)
       expect(page).to have_content(@item_order_1.quantity)
       expect(page).to have_content(@item_order_1.subtotal)
-      expect(page).to have_content(@order_1.name)
-      expect(page).to have_content(@order_1.address)
-      expect(page).to have_content(@order_1.city)
-      expect(page).to have_content(@order_1.state)
-      expect(page).to have_content(@order_1.zip)
+      expect(page).to have_content(@order_1.address.to_s)
       expect(page).to have_content(@item_order_1.created_at)
       expect(page).to have_content(@item_order_1.updated_at)
       expect(page).to have_content(@item_order_1.order.status)

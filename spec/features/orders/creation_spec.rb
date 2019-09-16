@@ -10,6 +10,8 @@ RSpec.describe("Order Creation") do
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
       @regular_user = create(:user)
+      address = @regular_user.addresses.create!(attributes_for(:address, id: 1))
+
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@regular_user)
 
@@ -27,11 +29,8 @@ RSpec.describe("Order Creation") do
     end
 
     it 'I can create a new order' do
-      name = "Bert"
-      address = create(:address, id: 1)
-
-      fill_in "Name", with: name
-      select "1", :from => "order[address_id]"
+      fill_in "Name", with: "Bert"
+      find("option[value=1]").click
 
       click_button "Create Order"
 
@@ -40,12 +39,34 @@ RSpec.describe("Order Creation") do
       expect(current_path).to eq("/profile/orders")
     end
 
-    it "once the order is complete, cart info is saved to item_orders table" do
+    it "I can add a new address on the order form" do
       name = "Bert"
-      address = create(:address, id: 2)
 
       fill_in "Name", with: name
-      select "2", :from => "order[address_id]"
+
+      click_link "Add a new address"
+
+      street = "123 Sesame St"
+      city = "Boston"
+      state = "MA"
+      zipcode = "02101"
+      nickname = "home"
+
+      fill_in "street", with: street
+      fill_in "city", with: city
+      fill_in "state", with: state
+      fill_in "zipcode", with: zipcode
+      fill_in "nickname", with: nickname
+
+      click_on "Create Address"
+
+      expect(current_path).to eq(profile_path)
+      # how to redirect back to order page after filling out the form? conditional redirects?
+    end
+
+    it "once the order is complete, cart info is saved to item_orders table" do
+      fill_in "Name", with: "Bert"
+      find("option[value=1]").click
 
       click_button "Create Order"
 
