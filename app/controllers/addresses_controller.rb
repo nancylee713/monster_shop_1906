@@ -12,13 +12,14 @@ class AddressesController<ApplicationController
 
   def new
     @address = @user.addresses.new
+    session[:return_to] = request.referrer
   end
 
   def create
     @address = @user.addresses.create(address_params)
     if @address.save
       flash[:success] = "New address has been added to your account!"
-      redirect_to profile_path
+      redirect_to session.delete(:return_to)
     else
       flash[:error] = @address.errors.full_messages.to_sentence
       redirect_to profile_addresses_new_path

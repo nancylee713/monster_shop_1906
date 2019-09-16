@@ -60,7 +60,7 @@ RSpec.describe("Order Creation") do
 
       click_on "Create Address"
 
-      expect(current_path).to eq(profile_path)
+      expect(current_path).to eq(profile_orders_new_path)
       # how to redirect back to order page after filling out the form? conditional redirects?
     end
 
