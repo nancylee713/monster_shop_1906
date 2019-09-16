@@ -10,11 +10,9 @@
 
   <body>
     <%= render partial: 'layouts/navbar' %>
-    <% flash.each do |name, msg| %>
-      <div class= "<%=name%>-flash">
-        <p><%= msg %></p>
-      </div>
-    <% end %>
+
+    <%= render partial: 'layouts/flash_messages' %>
+
     <%= yield %>
   </body>
 </html>
