@@ -30,7 +30,7 @@ RSpec.describe "User Profile Order Page" do
         click_link(@order_2.id)
       end
 
-      expect(page).to_not have_link("Update Address")
+      expect(page).to_not have_link("Update Shipping Address")
 
       visit "/profile/orders"
 
@@ -38,9 +38,9 @@ RSpec.describe "User Profile Order Page" do
         click_link(@order_1.id)
       end
 
-      expect(page).to have_link("Update Address")
+      expect(page).to have_link("Update Shipping Address")
 
-      click_link "Update Address"
+      click_link "Update Shipping Address"
 
       expect(find_field("street").value).to eq(@order_1.address.street)
 

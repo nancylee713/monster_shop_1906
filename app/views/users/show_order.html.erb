@@ -55,13 +55,18 @@
       </tbody>
   </table>
   <br>
-  <center>
-  <section id="cancel-order">
-    <%= link_to_if(@order.status == 'pending', "Cancel Order", order_cancel_path, method: :patch, class: "btn btn-danger item-buttons"){}%>
-  </section>
 
-  <section id="update-shipping-address">
-    <%= link_to_if(@order.status == 'pending', "Update Address", order_edit_path(@order), class: "btn btn-info item-buttons"){}%>
-  </section>
-  </center>
+  <div class="row">
+    <div class="col-2">
+      <section id="cancel-order">
+        <%= link_to_if(@order.status == 'pending', "Cancel Order", order_cancel_path, method: :patch, class: "btn btn-danger item-buttons"){}%>
+      </section>
+    </div>
+    <div class="col-3">
+      <section id="update-shipping-address">
+        <%= link_to_if(@order.status == 'pending', "Update Shipping Address", order_edit_path(@order), class: "btn btn-info item-buttons"){}%>
+      </section>
+    </div>
+  </div>
+
 </div>
