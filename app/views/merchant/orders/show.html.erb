@@ -4,16 +4,10 @@
     <tr>
       <th>Name</th>
       <th>Address</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
     </tr>
     <tr>
       <td><p><%= @order.name %> </p></td>
-      <td><p><%= @order.address %> </p></td>
-      <td><p><%= @order.city %> </p></td>
-      <td><p><%= @order.state %> </p></td>
-      <td><p><%= @order.zip %> </p></td>
+      <td><p><%= @order.address.to_s %> </p></td>
     </tr>
   </table>
 </section>

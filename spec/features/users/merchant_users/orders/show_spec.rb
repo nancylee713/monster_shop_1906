@@ -54,10 +54,7 @@ RSpec.describe "Merchant Order Show Page" do
 
     within "#shipping-address" do
       expect(page).to have_content(@order_1.name)
-      expect(page).to have_content(@order_1.address)
-      expect(page).to have_content(@order_1.city)
-      expect(page).to have_content(@order_1.state)
-      expect(page).to have_content(@order_1.zip)
+      expect(page).to have_content(@order_1.address.to_s)
     end
 
     within "#item-orders-#{@item_order_1.id}" do
