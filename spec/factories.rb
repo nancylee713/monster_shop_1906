@@ -42,11 +42,9 @@ FactoryBot.define do
 
   factory :order do
     sequence(:name) { |n| "order-#{n}"}
-    address { Faker::Address.street_address }
-    city { Faker::Address.city }
-    state { Faker::Address.state }
-    zip { Faker::Address.zip }
     status { 1 }
+    user
+    address
   end
 
   factory :merchant do
