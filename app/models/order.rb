@@ -1,5 +1,5 @@
 class Order <ApplicationRecord
-  validates_presence_of :name, :address, :city, :state, :zip, :status
+  validates_presence_of :name, :status
 
   has_many :item_orders
   has_many :items, through: :item_orders
@@ -18,14 +18,6 @@ class Order <ApplicationRecord
 
   def total_items
     item_orders.sum(:quantity)
-  end
-
-  def to_s
-    "#{self.name}
-    #{self.address}
-    #{self.city}, #{self.state}
-    #{self.zip}
-    "
   end
 
   def update_status
