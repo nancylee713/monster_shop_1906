@@ -1,7 +1,7 @@
 class Order <ApplicationRecord
   validates_presence_of :name, :status
 
-  has_many :item_orders
+  has_many :item_orders, :dependent => :destroy
   has_many :items, through: :item_orders
   has_many :merchants, through: :item
   has_many :users, through: :item_orders

@@ -15,6 +15,8 @@ module ApplicationHelper
         "alert-info"
       when "delete_item_warning"
         "alert-danger"
+      when "miss_update"
+        "alert-danger"
       when "no_address"
         "alert-danger"
       when "delete_warning"
