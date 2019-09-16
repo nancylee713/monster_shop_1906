@@ -8,7 +8,14 @@ RSpec.describe "Merchant Dashboard" do
     @item_2 = @merchant_1.items.create!(attributes_for(:item, name: 'Item 2'))
 
     @merchant_admin = create(:merchant_admin, merchant: @merchant_1)
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
+    # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
+
+    visit "/login"
+
+    fill_in :email, with: @merchant_admin.email
+    fill_in :password, with: @merchant_admin.password
+
+    click_button "Submit"
   end
 
   it 'merchant admin sees link to view shop items' do

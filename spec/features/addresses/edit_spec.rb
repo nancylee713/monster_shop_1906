@@ -5,8 +5,14 @@ RSpec.describe 'Address edit and update', type: :feature do
     user = User.create!(name: 'user-1', email: 'email-1@email.com', password: 'password')
     @home_address = user.addresses.create!(street: 'street-1', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'home')
     @dorm_address = user.addresses.create!(street: 'street-2', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'dorm')
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    visit profile_path
+    # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit "/login"
+
+    fill_in :email, with: user.email
+    fill_in :password, with: user.password
+
+    click_button "Submit"
   end
 
   describe "when I visit the user profile page" do
