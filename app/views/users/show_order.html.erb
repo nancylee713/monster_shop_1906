@@ -2,56 +2,52 @@
 
 <div class="container">
   <h4>Order information</h4>
-
   <table class="table">
     <thead class="thead-light">
       <tr>
         <th scope="col">Order ID</th>
-        <th scope="col">Item</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Subtotal</th>
-        <th scope="col">Shipping Info</th>
+        <th scope="col">Total # of Items</th>
+        <th scope="col">Grand Total</th>
         <th scope="col">Order Initially Placed</th>
         <th scope="col">Order Last Updated</th>
         <th scope="col">Order Status</th>
       </tr>
     </thead>
+
+    <tbody>
+      <%= render partial: 'order_detail', locals:{order: @order} %>
+    </tbody>
+  </table>
+</div>
+
+<div class="container">
+  <h4>Item information</h4>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Subtotal</th>
+      </tr>
+    </thead>
       <tbody>
-        <% @indiv_order.each_pair do |order_id, item_orders| %>
-          <% item_orders.each do |item_order| %>
-            <section id='item-order-<%= item_order.id %>'>
+        <% @order.items.each do |item| %>
+            <section id='item-<%= item.id %>'>
               <tr>
-                <td><%= link_to item_order.order.id, "/profile/orders/#{item_order.order.id}" %></td>
                 <td>
-                  <%= item_order.item.name %>
-                  <img id='thumbnail-<%= item_order.id %>'><%= image_tag item_order.item.image, class: 'img_thumbnail' %></img>
+                  <%= item.name %>
+                  <img id='thumbnail-<%= item.id %>'><%= image_tag item.image, class: 'img_thumbnail' %></img>
                 </td>
-                <td><%= item_order.item.description %></td>
-                <td><%= item_order.price %></td>
-                <td><%= item_order.quantity %></td>
-                <td><%= item_order.subtotal %></td>
-                <td><%= item_order.order.address.to_s %></td>
-                <td><%= item_order.created_at %></td>
-                <td><%= item_order.updated_at %></td>
-                <td><%= item_order.order.status %></td>
+                <td><%= item.description %></td>
+                <td><%= item.price %></td>
+                <td><%= @order.total_quantity(item) %></td>
+                <td><%= @order.subtotal(item) %></td>
               </tr>
             </section>
           <% end %>
-
-          <section id='order-stats-<%= order_id %>'>
-            <tr class="table-success">
-              <td colspan=2>Total Quantity</td>
-              <td colspan=8><%= @item_orders.total_quantity_per_order(order_id) %></td>
-            </tr>
-
-            <tr class="table-info">
-              <td colspan=2>Grand Total</td>
-              <td colspan=8><%= number_to_currency(@item_orders.grandtotal_per_order(order_id)) %></td>
-            </tr>
-          </section>
-        <% end %>
       </tbody>
   </table>
   <br>

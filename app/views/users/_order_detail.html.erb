@@ -1,0 +1,11 @@
+<section id='order-<%= order.id %>'>
+    <tr>
+      <td><%= link_to order.id, "/profile/orders/#{order.id}" %></td>
+      <td><%= order.total_items %></td>
+      <td><%= number_to_currency(order.grandtotal) %></td>
+      <td><%= order.address.to_s %></td>
+      <td><%= order.created_at %></td>
+      <td><%= order.updated_at %></td>
+      <td><%= order.status %></td>
+    </tr>
+</section>
