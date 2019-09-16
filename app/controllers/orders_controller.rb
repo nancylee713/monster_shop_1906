@@ -32,8 +32,30 @@ class OrdersController <ApplicationController
     end
   end
 
+  def edit
+    @order = current_user.orders.find(params[:id])
+    @address = @order.address
+  end
+
+  def update
+    @order = current_user.orders.find(params[:id])
+    @address = @order.address
+    @address.update(address_params)
+    if @address.save
+      flash[:order_update] = "Your shipping address has been updated!"
+      redirect_to "/profile/orders/#{@order.id}"
+    else
+      flash[:miss_update] = @address.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
   private
   def order_params
     params.require(:order).permit(:name, :address_id, :user_id)
+  end
+
+  def address_params
+    params.require(:address).permit(:street, :city, :state, :zipcode)
   end
 end

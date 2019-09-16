@@ -59,5 +59,9 @@
   <section id="cancel-order">
     <%= link_to_if(@order.status == 'pending', "Cancel Order", order_cancel_path, method: :patch, class: "btn btn-danger item-buttons"){}%>
   </section>
+
+  <section id="update-shipping-address">
+    <%= link_to_if(@order.status == 'pending', "Update Address", order_edit_path(@order), class: "btn btn-info item-buttons"){}%>
+  </section>
   </center>
 </div>

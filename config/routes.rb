@@ -46,10 +46,14 @@ Rails.application.routes.draw do
   patch "/profile", to: "users#update"
   get "/profile/edit_password", to: "users#edit_password"
   patch "/profile/update_password", to: "users#update_password"
+
   get "/profile/orders", to: "users#show_orders"
   post "/profile/orders", to: "orders#create"
   get "/profile/orders/new", to: "orders#new"
   get "/profile/orders/:id", to: "users#show_order"
+
+  get "profile/orders/:id/edit", to: "orders#edit", as: :order_edit
+  patch "profile/orders/:id", to: "orders#update"
 
   get "/profile/addresses/new", to: "addresses#new"
   post "/profile/addresses", to: "addresses#create"
