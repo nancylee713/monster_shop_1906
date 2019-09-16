@@ -22,5 +22,17 @@ describe Address, type: :model do
       address = create(:address, street: 'street-1')
       expect(address.to_s).to eq("street-1, Denver, CO, 80202")
     end
+
+    it 'can_be_deleted?' do
+      user = User.create!(name: 'user-1', email: 'email-1@email.com', password: 'password')
+      home_address = user.addresses.create!(id: 1, street: 'street-1', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'home')
+      dorm_address = user.addresses.create!(id: 2, street: 'street-2', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'dorm')
+      order_1 = create(:order, user: user, address: dorm_address)
+      order_2 = create(:order, user: user, address: home_address, status: 1)
+      order_3 = create(:order, user: user, address: home_address, status: 2)
+
+      expect(dorm_address.can_be_deleted?).to eq(true)
+      expect(home_address.can_be_deleted?).to eq(false)
+    end
   end
 end
