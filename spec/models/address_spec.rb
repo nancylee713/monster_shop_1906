@@ -16,4 +16,11 @@ describe Address, type: :model do
     it { should belong_to :user }
     it { should have_many :orders}
   end
+
+  describe "methods" do
+    it 'to_s' do
+      address = create(:address)
+      expect(address.to_s).to eq("street-1, Denver, CO, 80202")
+    end
+  end
 end

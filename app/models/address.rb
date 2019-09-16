@@ -6,4 +6,11 @@ class Address < ApplicationRecord
 
   belongs_to :user
   has_many :orders
+
+  def to_s
+    self.attributes
+      .slice("street", "city", "state", "zipcode")
+      .values
+      .join(', ')
+  end
 end
