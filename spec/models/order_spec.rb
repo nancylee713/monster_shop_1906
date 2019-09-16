@@ -61,5 +61,13 @@ describe Order, type: :model do
         expect(item_order.fulfilled?).to eq(false)
       end
     end
+
+    it 'total_quantity' do
+      expect(@order_1.total_quantity(@tire)).to eq(2)
+    end
+
+    it 'subtotal' do
+      expect(@order_1.subtotal(@tire)).to eq(200)
+    end
   end
 end

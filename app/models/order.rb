@@ -11,6 +11,13 @@ class Order <ApplicationRecord
 
   enum status: [:packaged, :pending, :shipped, :cancelled]
 
+  def total_quantity(item)
+    item_orders.where(item_id: item.id).sum(:quantity)
+  end
+
+  def subtotal(item)
+    item_orders.where(item_id: item.id).sum("price * quantity")
+  end
 
   def grandtotal
     item_orders.sum('price * quantity')

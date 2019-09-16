@@ -48,14 +48,6 @@ describe ItemOrder, type: :model do
         @item_order_4 = user.item_orders.create!(order: @order_2, item: item_2, quantity: 10000, price: item_2.price, fulfilled?: false)
     end
 
-    it 'total_quantity_per_order' do
-      expect(ItemOrder.total_quantity_per_order(@order_1.id)).to eq(4)
-    end
-
-    it 'grandtotal_per_order' do
-      expect(ItemOrder.grandtotal_per_order(@order_1.id)).to eq(100)
-    end
-
     it 'can return true if item is in stock' do
       expect(@item_order_1.instock?).to eq(true)
       expect(@item_order_4.instock?).to eq(false)
