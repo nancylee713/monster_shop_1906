@@ -1,5 +1,4 @@
 class Merchant::ItemsController < Merchant::BaseController
-  before_action :current_merchant_admin?
   before_action :set_merchant
 
   def set_merchant
