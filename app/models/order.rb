@@ -6,6 +6,9 @@ class Order <ApplicationRecord
   has_many :merchants, through: :item
   has_many :users, through: :item_orders
 
+  belongs_to :user
+  belongs_to :address
+
   enum status: [:packaged, :pending, :shipped, :cancelled]
 
 

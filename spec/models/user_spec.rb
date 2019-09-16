@@ -17,6 +17,7 @@ describe User, type: :model do
     it {should belong_to(:merchant).optional }
     it {should have_many :addresses }
     it {should accept_nested_attributes_for :addresses}
+    it {should have_many :orders}
   end
 
   describe "roles" do

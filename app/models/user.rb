@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :addresses
   accepts_nested_attributes_for :addresses, allow_destroy: true, reject_if: :all_blank
 
+  has_many :orders
+
   enum role: [:regular_user, :merchant_employee, :merchant_admin, :admin_user]
 
   def item_orders_by_merchant(order_id)
