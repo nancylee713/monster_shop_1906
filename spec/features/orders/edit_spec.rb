@@ -26,7 +26,7 @@ RSpec.describe "User Profile Order Page" do
 
   describe "After checking out my order, if an order is still pending" do
     it "I can change to a different address I want my items shipped " do
-      within "#item-order-#{@item_order_2.id}" do
+      within "#order-#{@order_2.id}" do
         click_link(@order_2.id)
       end
 
@@ -34,7 +34,7 @@ RSpec.describe "User Profile Order Page" do
 
       visit "/profile/orders"
 
-      within "#item-order-#{@item_order_1.id}" do
+      within "#order-#{@order_1.id}" do
         click_link(@order_1.id)
       end
 
@@ -52,7 +52,7 @@ RSpec.describe "User Profile Order Page" do
       expect(current_path).to eq("/profile/orders/#{@order_1.id}")
       expect(page).to have_content("Your shipping address has been updated!")
 
-      within "#item-order-#{@item_order_1.id}" do
+      within "#order-#{@order_1.id}" do
         expect(page).to have_content(new_street)
       end
     end
