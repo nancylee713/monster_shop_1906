@@ -50,8 +50,8 @@ address_4 = FactoryBot.create(:address, nickname: "dorm 2")
 address_5 = FactoryBot.create(:address, nickname: "dorm 3")
 
 
-merchant_employee = FactoryBot.create(:merchant_employee)
-merchant_admin = FactoryBot.create(:merchant_admin)
+merchant_employee = FactoryBot.create(:merchant_employee, merchant: bike_shop)
+merchant_admin = FactoryBot.create(:merchant_admin, merchant: bike_shop)
 admin = FactoryBot.create(:admin)
 
 order_1 = FactoryBot.create(:order, user: user_1, address: address_1, status: 0)

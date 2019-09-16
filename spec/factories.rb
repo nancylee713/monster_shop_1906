@@ -20,6 +20,7 @@ FactoryBot.define do
     sequence(:email) { |n| "me-#{n}@email.com" }
     password { "password" }
     role { 1 }
+    merchant
   end
 
   factory :merchant_admin, class: User do
@@ -27,6 +28,7 @@ FactoryBot.define do
     sequence(:email) { |n| "ma-#{n}@email.com" }
     password { "password" }
     role { 2 }
+    merchant
   end
 
   factory :admin, class: User do
