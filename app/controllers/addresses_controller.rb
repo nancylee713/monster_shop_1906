@@ -40,10 +40,14 @@ class AddressesController<ApplicationController
   end
 
   def destroy
-    @user.addresses.delete(@address)
-    @address.destroy
-    flash[:delete_item_warning] = "Your #{@address.nickname} address is now deleted!"
-    redirect_to profile_path
+    if @address.can_be_deleted?
+      @user.addresses.delete(@address)
+      @address.destroy
+      flash[:delete_item_warning] = "Your #{@address.nickname} address is now deleted!"
+    else
+      flash[:warning] = "This address has been already used in a shipped order and cannot be deleted at this time."
+    end
+      redirect_to profile_path
   end
 
   private
