@@ -20,10 +20,10 @@ RSpec.describe "Admin Dashboard page" do
       @item_order_3 = @regular_user_1.item_orders.create!(order: @order_1, item: @item_3, quantity: 10, price: @item_3.price, user: @regular_user_1, fulfilled?: false)
 
     @order_2 = create(:order, name: "Amy", status: 0)
-      @item_order_4 = @regular_user_2.item_orders.create(order: @order_2, item: @item_2, quantity: 100, price: @item_2.price, user: @regular_user_1, fulfilled?: true)
+      @item_order_4 = @regular_user_2.item_orders.create(order: @order_2, item: @item_2, quantity: 100, price: @item_2.price, user: @regular_user_2, fulfilled?: true)
 
     @order_3 = create(:order, name: "Beth", status: 2)
-      @item_order_5 = @regular_user_2.item_orders.create(order: @order_3, item: @item_4, quantity: 18, price: @item_4.price, user: @regular_user_1, fulfilled?: true)
+      @item_order_5 = @regular_user_2.item_orders.create(order: @order_3, item: @item_4, quantity: 18, price: @item_4.price, user: @regular_user_2, fulfilled?: true)
 
     @order_4 = create(:order, name: "Adam", status: 3)
       @item_order_6 = @regular_user_1.item_orders.create(order: @order_4, item: @item_5, quantity: 15, price: @item_5.price, user: @regular_user_1, fulfilled?: true)
@@ -32,7 +32,7 @@ RSpec.describe "Admin Dashboard page" do
       @item_order_7 = @regular_user_1.item_orders.create(order: @order_5, item: @item_1, quantity: 15, price: @item_1.price, user: @regular_user_1, fulfilled?: false)
 
     @order_6 = create(:order, name: "Jim", status: 0)
-      @item_order_8 = @regular_user_2.item_orders.create(order: @order_6, item: @item_3, quantity: 10, price: @item_3.price, user: @regular_user_1, fulfilled?: true)
+      @item_order_8 = @regular_user_2.item_orders.create(order: @order_6, item: @item_3, quantity: 10, price: @item_3.price, user: @regular_user_2, fulfilled?: true)
 
     @admin_1 = create(:user, name: "Admin 1", role: 3)
 
@@ -131,9 +131,16 @@ RSpec.describe "Admin Dashboard page" do
   end
 
   it 'user cannot cancel order once shipped' do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@regular_user_1)
+    user = create(:user)
+    address = user.addresses.create(attributes_for(:address))
+    order = create(:order, user: user, address: address, status: 2)
 
-    visit "/profile/orders/#{@order_2.id}"
+    visit "/login"
+    fill_in :email, with: user.email
+    fill_in :password, with: user.password
+    click_button "Submit"
+
+    visit "/profile/orders/#{order.id}"
 
     expect(page).to_not have_button("Cancel Order")
   end
