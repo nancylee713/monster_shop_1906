@@ -39,12 +39,24 @@ class Cart
   def subtract_quantity(item_id)
     @contents[item_id] -= 1
   end
-  
+
   def limit_reached?(item_id)
     @contents[item_id] == Item.find(item_id).inventory
   end
 
   def quantity_zero?(item_id)
     @contents[item_id] == 0
+  end
+
+  def save_to_db(user, order)
+    self.items.each do |item,quantity|
+        ItemOrder.create({
+        user: user,
+        order: order,
+        item: item,
+        quantity: quantity,
+        price: item.price
+        })
+    end
   end
 end

@@ -1,12 +1,11 @@
 class OrdersController <ApplicationController
 
   def new
-    @user = current_user
-    @order = Order.new
+    @order = current_user.orders.new
   end
 
   def cancel
-    order = Order.find(params[:id])
+    order = current_user.orders.find(params[:id])
     order.cancel_order
     order.update(status: 3)
     order.save
@@ -16,17 +15,9 @@ class OrdersController <ApplicationController
   end
 
   def create
-    @user = current_user
-    @order = Order.create(order_params)
+    @order = current_user.orders.create(order_params)
     if @order.save
-      cart.items.each do |item,quantity|
-        @user.item_orders.create({
-          order: @order,
-          item: item,
-          quantity: quantity,
-          price: item.price
-          })
-      end
+      cart.save_to_db(current_user, @order)
       session.delete(:cart)
       flash[:order] = "Your order has been created!"
       redirect_to "/profile/orders"
@@ -38,6 +29,6 @@ class OrdersController <ApplicationController
 
   private
   def order_params
-    params.require(:order).permit(:name, :address, :city, :state, :zip)
+    params.require(:order).permit(:name, :address_id, :user_id)
   end
 end
