@@ -42,6 +42,13 @@ RSpec.describe 'Address delete', type: :feature do
 
       expect(page).to have_content("This address has been already used in a shipped order and cannot be deleted at this time.")
       expect(page).to have_css("#address-#{@dorm_address.id}")
+
+      within "#address-#{@dorm_address.id}" do
+        click_link "Edit"
+      end
+
+      expect(page).to have_content("This address has been already used in a shipped order and cannot be edited at this time.")
+      expect(page).to have_css("#address-#{@dorm_address.id}")
     end
   end
 end
