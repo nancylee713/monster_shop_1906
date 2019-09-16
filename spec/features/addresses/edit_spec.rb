@@ -52,14 +52,14 @@ RSpec.describe 'Address edit and update', type: :feature do
 
       fill_in "street", with: ""
       fill_in "city", with: ""
-      fill_in "state", with: ""
-      fill_in "zipcode", with: ""
+      fill_in "state", with: "CO"
+      fill_in "zipcode", with: "80202"
       fill_in "nickname", with: ""
 
       click_on "Update Address"
 
       expect(current_path).to eq("/profile/addresses/#{@home_address.id}")
-      expect(page).to have_content("Street can't be blank, City can't be blank, State can't be blank, Zipcode can't be blank, and Nickname can't be blank")
+      expect(page).to have_content("Street can't be blank, City can't be blank, and Nickname can't be blank")
     end
   end
 end

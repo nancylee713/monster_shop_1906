@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe "User Profile Order Page" do
   before :each do
     @user = create(:user)
+    address_1 = create(:address)
+    address_2 = create(:address)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
     merchant_1 = create(:merchant)
@@ -10,8 +12,8 @@ RSpec.describe "User Profile Order Page" do
     @item_1 = merchant_1.items.create!(attributes_for(:item))
     @item_2 = merchant_1.items.create!(attributes_for(:item))
 
-    @order_1 = create(:order)
-    @order_2 = create(:order, status: 'packaged')
+    @order_1 = create(:order, user: @user, address: address_1)
+    @order_2 = create(:order, user: @user, address: address_2, status: 'packaged')
     @item_order_1 = @user.item_orders.create!(order: @order_1, item: @item_1, quantity: 1, price: @item_1.price)
     @item_order_2 = @user.item_orders.create!(order: @order_1, item: @item_2, quantity: 3, price: @item_2.price)
   end

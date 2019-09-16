@@ -51,17 +51,14 @@ RSpec.describe "Address creation" do
 
     it "I cannot create a new address unless I complete the whole form" do
 
-      street = "123 Sesame St"
-      nickname = "work"
-
       click_link "Add New Address"
 
-      fill_in "street", with: street
-      fill_in "nickname", with: nickname
+      fill_in "state", with: "CO"
+      fill_in "zipcode", with: "80202"
 
       click_on "Create Address"
 
-      expect(page).to have_content("City can't be blank, State can't be blank, and Zipcode can't be blank")
+      expect(page).to have_content("Street can't be blank, City can't be blank, and Nickname can't be blank")
       expect(current_path).to eq(profile_addresses_new_path)
     end
   end

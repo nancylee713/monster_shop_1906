@@ -19,7 +19,7 @@ describe Address, type: :model do
 
   describe "methods" do
     it 'to_s' do
-      address = create(:address)
+      address = create(:address, street: 'street-1')
       expect(address.to_s).to eq("street-1, Denver, CO, 80202")
     end
   end
