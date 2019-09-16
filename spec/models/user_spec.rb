@@ -82,7 +82,7 @@ describe User, type: :model do
 
     it 'default_address' do
       user = create(:user)
-      default_address = user.addresses[0]
+      default_address = user.addresses.create!(attributes_for(:address, nickname: 'home'))
       user.addresses << create(:address, street: "some street", nickname: "work")
 
       expect(user.default_address).to eq("#{default_address.street}, Denver, CO, 80202")
