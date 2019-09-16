@@ -24,9 +24,6 @@ class User < ApplicationRecord
   end
 
   def default_address
-    self.addresses.where(nickname: :home)
-      .pluck(:street, :city, :state, :zipcode)
-      .flatten
-      .join(', ')
+    self.addresses.first.to_s
   end
 end
