@@ -39,6 +39,6 @@ class ApplicationController < ActionController::Base
       "https://image.flaticon.com/icons/svg/145/145843.svg",
       "https://image.flaticon.com/icons/svg/145/145849.svg",
       "https://image.flaticon.com/icons/svg/145/145846.svg"
-    ]
+    ].sample
   end
 end
