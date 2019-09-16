@@ -27,18 +27,11 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
 
-    <%= f.label :address %>
-    <%= f.text_field :address %>
+    <%= f.select(:address_id, current_user.addresses.collect{|a| [a.to_s, a.id]}, {}, { :class => 'address_dropdown' }) %>
 
-    <%= f.label :city %>
-    <%= f.text_field :city %>
+    <%= link_to "Add a new address", profile_addresses_new_path %>
 
-    <%= f.label :state %>
-    <%= f.text_field :state %>
-
-    <%= f.label :zip %>
-    <%= f.number_field :zip %>
-
+    <%= f.hidden_field :user_id, value: current_user.id %>
     <%= f.submit %>
   <% end %>
 </center>

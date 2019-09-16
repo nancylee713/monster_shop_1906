@@ -28,16 +28,10 @@ RSpec.describe("Order Creation") do
 
     it 'I can create a new order' do
       name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
+      address = create(:address, id: 1)
 
       fill_in "Name", with: name
-      fill_in "Address", with: address
-      fill_in "City", with: city
-      fill_in "State", with: state
-      fill_in "Zip", with: zip
+      select "1", :from => "order[address_id]"
 
       click_button "Create Order"
 
@@ -46,25 +40,29 @@ RSpec.describe("Order Creation") do
       expect(current_path).to eq("/profile/orders")
     end
 
-    it 'i cant create order if info not filled out' do
-      name = ""
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
+    it "once the order is complete, cart info is saved to item_orders table" do
+      name = "Bert"
+      address = create(:address, id: 2)
 
       fill_in "Name", with: name
-      fill_in "Address", with: address
-      fill_in "City", with: city
-      fill_in "State", with: state
-      fill_in "Zip", with: zip
+      select "2", :from => "order[address_id]"
+
+      click_button "Create Order"
+
+      new_order = Order.last
+      new_item_order = ItemOrder.last
+
+      expect(new_item_order.order_id).to eq(new_order.id)
+    end
+
+    it 'i cant create order if info not filled out' do
+
+      fill_in "Name", with: ""
 
       click_button "Create Order"
 
       expect(page).to have_content("Please complete address form to create an order.")
       expect(page).to have_button("Create Order")
     end
-
-
   end
 end

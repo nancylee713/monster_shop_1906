@@ -58,10 +58,8 @@ RSpec.describe("New Order Page") do
       click_on "Checkout"
 
       expect(page).to have_field("Name")
-      expect(page).to have_field("Address")
-      expect(page).to have_field("City")
-      expect(page).to have_field("State")
-      expect(page).to have_field("Zip")
+      expect(page).to have_css(".address_dropdown")
+      expect(page).to have_link("Add a new address")
       expect(page).to have_button("Create Order")
     end
   end
