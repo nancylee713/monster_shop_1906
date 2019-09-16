@@ -2,42 +2,23 @@
 
 <div class="container">
   <h4>Order information</h4>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Total # of Items</th>
+        <th scope="col">Grand Total</th>
+        <th scope="col">Shipping Address</th>
+        <th scope="col">Order Initially Placed</th>
+        <th scope="col">Order Last Updated</th>
+        <th scope="col">Order Status</th>
+      </tr>
+    </thead>
 
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">Order ID</th>
-          <th scope="col">Order Initially Placed</th>
-          <th scope="col">Order Last Updated</th>
-          <th scope="col">Order Status</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @item_orders.group_by(&:order_id).each_pair do |order_id, item_orders| %>
-          <% item_orders.each do |item_order| %>
-            <section id='item-order-<%= item_order.id %>'>
-                <tr>
-                  <td><%= link_to item_order.order.id, "/profile/orders/#{item_order.order.id}" %></td>
-                  <td><%= item_order.created_at %></td>
-                  <td><%= item_order.updated_at %></td>
-                  <td><%= item_order.order.status %></td>
-                </tr>
-            </section>
-          <% end %>
-
-          <section id='order-stats-<%= order_id %>'>
-            <tr class="table-success">
-              <td colspan=2>Total Quantity</td>
-              <td colspan=8><%= @item_orders.total_quantity_per_order(order_id) %></td>
-            </tr>
-
-            <tr class="table-info">
-              <td colspan=2>Grand Total</td>
-              <td colspan=8><%= number_to_currency(@item_orders.grandtotal_per_order(order_id)) %></td>
-            </tr>
-          </section>
-        <% end %>
-      </tbody>
-    </table>
+    <tbody>
+      <% @orders.each do |order| %>
+        <%= render partial: 'order_detail', locals:{order: order} %>
+      <% end %>
+    </tbody>
+  </table>
 </div>

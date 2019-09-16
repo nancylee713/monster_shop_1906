@@ -56,13 +56,11 @@ class UsersController< ApplicationController
   end
 
   def show_orders
-    @item_orders = @user.item_orders
+    @orders = @user.orders
   end
 
   def show_order
-    @order = Order.find(params[:id])
-    @item_orders = @user.item_orders
-    @indiv_order = @item_orders.display_info(@order)
+    @order = @user.orders.find(params[:id])
   end
 
   private
