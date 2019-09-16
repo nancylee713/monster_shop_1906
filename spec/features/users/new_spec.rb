@@ -42,7 +42,19 @@ RSpec.describe "Registering User" do
     click_on "Create User"
 
     expect(current_path).to eq("/register")
-    expect(page).to have_content("Password can't be blank, Name can't be blank, Email can't be blank, Email is invalid, Password confirmation doesn't match Password, Addresses street can't be blank, Addresses city can't be blank, Addresses state can't be blank, and Addresses zipcode can't be blank")
+
+    expect(page).to have_content("Password can't be blank")
+    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content("Email can't be blank")
+    expect(page).to have_content("Email is invalid")
+    expect(page).to have_content("Password confirmation doesn't match Password")
+    expect(page).to have_content("Addresses street can't be blank")
+    expect(page).to have_content("Addresses city can't be blank")
+    expect(page).to have_content("Addresses state can't be blank")
+    expect(page).to have_content("Addresses state is the wrong length (should be 2 characters)")
+    expect(page).to have_content("Addresses zipcode can't be blank")
+    expect(page).to have_content("Addresses zipcode is the wrong length (should be 5 characters)")
+    expect(page).to have_content("Addresses zipcode is not a number")  
   end
 
   it "confirms passwords match" do
@@ -93,5 +105,27 @@ RSpec.describe "Registering User" do
     expect(find_field('zipcode').value).to eq @zipcode
     expect(find_field('email').value).to eq nil
     expect(find_field('password').value).to eq nil
+  end
+
+  it "does not register a user when invalid fields are given" do
+    visit "/register"
+
+    fill_in "name", with: @user_name
+    fill_in "email", with: @user_email
+    fill_in "password", with: @user_password
+    fill_in "password_confirmation", with: @user_confirm_password
+    fill_in "street", with: @street
+    fill_in "city", with: @city
+    fill_in "state", with: "Colorado"
+    fill_in "zipcode", with: "123a"
+    fill_in "nickname", with: @nickname
+
+    click_on "Create User"
+
+    expect(page).to have_content("Addresses state is the wrong length (should be 2 characters)")
+    expect(page).to have_content("Addresses zipcode is the wrong length (should be 5 characters)")
+    expect(page).to have_content("Addresses zipcode is the wrong length (should be 5 characters)")
+    expect(page).to have_content("Addresses zipcode is not a number")
+
   end
 end
