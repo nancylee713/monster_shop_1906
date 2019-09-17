@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20190917023552) do
     t.string "name"
     t.float "value"
     t.boolean "is_enabled", default: true
+    t.integer "item_id"
     t.bigint "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
