@@ -8,7 +8,6 @@ describe Coupon, type: :model do
     it { should validate_presence_of :value }
     it { should validate_presence_of :item_id }
     it { should validate_numericality_of(:item_id).is_greater_than_or_equal_to(1).only_integer }
-    it { should validate_presence_of :is_enabled }
     it { should validate_inclusion_of(:is_enabled).in_array([true, false]) }
     it { should validate_inclusion_of(:is_percent).in_array([true, false]) }
     it { should validate_inclusion_of(:is_redeemed).in_array([true, false])}
