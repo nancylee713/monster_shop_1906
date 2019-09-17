@@ -28,7 +28,10 @@
             <% end %>
             <td><%= coupon.item_name(coupon.item_id) %></td>
             <td><%= coupon.is_enabled %></td>
-            <td>-</td>
+            <td>
+              <%= link_to "Edit", edit_merchant_coupon_path(coupon), class: "btn btn-info" %>
+              <%= link_to "Delete", merchant_coupon_path(coupon), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            </td>
           </tr>
         </section>
       <% end %>
