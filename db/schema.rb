@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190916010517) do
+ActiveRecord::Schema.define(version: 20190917023552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,26 @@ ActiveRecord::Schema.define(version: 20190916010517) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "coupon_users", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "coupon_id"
+    t.boolean "is_redeemed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_coupon_users_on_coupon_id"
+    t.index ["user_id"], name: "index_coupon_users_on_user_id"
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string "name"
+    t.float "value"
+    t.boolean "is_enabled", default: true
+    t.bigint "merchant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["merchant_id"], name: "index_coupons_on_merchant_id"
   end
 
   create_table "item_orders", force: :cascade do |t|
@@ -96,6 +116,9 @@ ActiveRecord::Schema.define(version: 20190916010517) do
   end
 
   add_foreign_key "addresses", "users"
+  add_foreign_key "coupon_users", "coupons"
+  add_foreign_key "coupon_users", "users"
+  add_foreign_key "coupons", "merchants"
   add_foreign_key "item_orders", "items"
   add_foreign_key "item_orders", "orders"
   add_foreign_key "item_orders", "users"
