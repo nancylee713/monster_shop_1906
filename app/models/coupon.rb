@@ -19,8 +19,4 @@ class Coupon < ApplicationRecord
   def item_name(id)
     self.merchant.items.find(id).name
   end
-
-  def is_redeemed?
-    binding.pry
-  end
 end

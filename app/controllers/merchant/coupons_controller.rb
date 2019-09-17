@@ -44,8 +44,12 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def destroy
-    @coupon.destroy
-    flash[:delete_coupon] = "Your coupon is now deleted!"
+    if @coupon.is_redeemed?
+      flash[:error] = "This coupon has been already redeemed and cannot be deleted"
+    else
+      @coupon.destroy
+      flash[:delete_coupon] = "Your coupon is now deleted!"
+    end
     redirect_to merchant_coupons_path
   end
 
