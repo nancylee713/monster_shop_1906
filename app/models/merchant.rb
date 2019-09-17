@@ -40,4 +40,8 @@ class Merchant < ApplicationRecord
   def deactivate_items
     items.each { |item| item.update(active?: false) }
   end
+
+  def reach_coupon_limit?
+    self.coupons.count == 5
+  end
 end

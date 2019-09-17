@@ -84,5 +84,20 @@ describe Merchant, type: :model do
       item_order_1 = @user.item_orders.create!(order: order_1, item: @tire, price: @tire.price, quantity: 2)
       expect(@meg.pending_orders).to eq([order_1])
     end
+
+    it "reach_coupon_limit?" do
+      bike_shop = create(:merchant)
+
+      coupon_1 = create(:coupon, merchant: bike_shop, item_id: 1)
+      coupon_2 = create(:coupon, merchant: bike_shop, item_id: 2)
+      coupon_3 = create(:coupon, merchant: bike_shop, item_id: 3)
+      coupon_4 = create(:coupon, merchant: bike_shop, item_id: 4)
+      
+      expect(bike_shop.reach_coupon_limit?).to eq(false)
+
+      coupon_5 = create(:coupon, merchant: bike_shop, item_id: 5)
+
+      expect(bike_shop.reach_coupon_limit?).to eq(true)
+    end
   end
 end

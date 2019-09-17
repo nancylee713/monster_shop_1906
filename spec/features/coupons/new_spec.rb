@@ -39,6 +39,17 @@ RSpec.describe "Coupon creation" do
           expect(page).to have_content(new_coupon.is_enabled)
         end
       end
+
+      it "I cannot create more than 5 coupons" do
+        coupon_1 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
+        coupon_2 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
+        coupon_3 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
+        coupon_4 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
+        coupon_5 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
+
+        visit merchant_coupons_path
+        expect(page).to_not have_link("Add New Coupon")
+      end
     end
   end
 end

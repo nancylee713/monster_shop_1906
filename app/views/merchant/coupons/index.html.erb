@@ -1,7 +1,7 @@
 <center><h1>My Coupons</h1> </center>
 
 <div class="container">
-  <p><%= link_to "Add New Coupon", new_merchant_coupon_path %></p>
+  <p><%= link_to "Add New Coupon", new_merchant_coupon_path unless @merchant.reach_coupon_limit? %></p>
 
   <table class="table">
     <thead class="thead-light">
