@@ -1,13 +1,17 @@
 class Merchant::CouponsController < Merchant::BaseController
   before_action :set_merchant
-  before_action :set_coupon, only: [:edit, :update, :destroy]
+  before_action :set_coupon, only: [:edit, :update, :destroy, :update_status]
 
   def set_merchant
     @merchant = current_user.merchant
   end
 
   def set_coupon
-    @coupon = @merchant.coupons.find(params[:id])
+    if params[:coupon]
+      @coupon = @merchant.coupons.find(params[:format])
+    else
+      @coupon = @merchant.coupons.find(params[:id])
+    end
   end
 
   def index
@@ -49,6 +53,16 @@ class Merchant::CouponsController < Merchant::BaseController
     else
       @coupon.destroy
       flash[:delete_coupon] = "Your coupon is now deleted!"
+    end
+    redirect_to merchant_coupons_path
+  end
+
+  def update_status
+    @coupon.toggle_status
+    if @coupon.is_enabled
+      flash[:success] = "This coupon is now available"
+    else
+      flash[:success] = "This coupon is no longer valid"
     end
     redirect_to merchant_coupons_path
   end
