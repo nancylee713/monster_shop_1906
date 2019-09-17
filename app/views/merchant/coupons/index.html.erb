@@ -21,8 +21,12 @@
           <tr>
             <td>#<%= coupon.id %></td>
             <td><%= coupon.name %></td>
-            <td><%= coupon.value %></td>
-            <td><%= coupon.item.name %></td>
+            <% if coupon.is_percent %>
+              <td><%= number_to_percentage(coupon.value, precision: 0) %> OFF</td>
+            <% else %>
+              <td><%= number_to_currency(coupon.value) %> OFF</td>
+            <% end %>
+            <td><%= coupon.item_name(coupon.item_id) %></td>
             <td><%= coupon.is_enabled %></td>
             <td>-</td>
           </tr>
