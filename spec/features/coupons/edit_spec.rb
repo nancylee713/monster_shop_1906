@@ -27,26 +27,24 @@ RSpec.describe "Coupon Edit" do
 
         expect(current_path).to eq(edit_merchant_coupon_path(coupon))
 
-        expect(find_field("Name").value.length).to eq(10)
-        expect(find_field("Value").value).to eq("#{coupon.value}")
+        expect(find_field("Name").value).to eq(coupon.name)
+        expect(find_field("Value").value).to eq(coupon.value.to_s)
         expect(find_by_id('coupon_item_id').value).to eq(@tire.id.to_s)
 
         fill_in "Value", with: 5
 
         click_on "Update Coupon"
 
-        binding.pry
-        
         expect(current_path).to eq(merchant_coupons_path)
         expect(page).to have_content("Your coupon is updated!")
 
 
-        within "#coupon-#{new_coupon.id}" do
-          expect(page).to have_content(new_coupon.id)
-          expect(page).to have_content(name)
-          expect(page).to have_content("$#{value.to_f}")
+        within "#coupon-#{coupon.id}" do
+          expect(page).to have_content(coupon.id)
+          expect(page).to have_content(coupon.name)
+          expect(page).to have_content("$5.00")
           expect(page).to have_content(@tire.name)
-          expect(page).to have_content(new_coupon.is_enabled)
+          expect(page).to have_content("Enabled")
         end
       end
     end
