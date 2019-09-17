@@ -19,4 +19,8 @@ class Coupon < ApplicationRecord
   def item_name(id)
     self.merchant.items.find(id).name
   end
+
+  def toggle_status
+    self.toggle!(:is_enabled)
+  end
 end

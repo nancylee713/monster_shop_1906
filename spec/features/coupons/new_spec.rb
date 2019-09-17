@@ -36,7 +36,7 @@ RSpec.describe "Coupon creation" do
           expect(page).to have_content(new_coupon.name)
           expect(page).to have_content("$#{new_coupon.value.to_f}")
           expect(page).to have_content(@tire.name)
-          expect(page).to have_content(new_coupon.is_enabled)
+          expect(page).to have_content("Enabled")
         end
       end
 

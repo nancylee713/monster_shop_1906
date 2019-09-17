@@ -10,7 +10,7 @@
         <th scope="col">Coupon Name</th>
         <th scope="col">Value</th>
         <th scope="col">Item</th>
-        <th scope="col">Enabled?</th>
+        <th scope="col">Status</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -27,7 +27,15 @@
               <td><%= number_to_currency(coupon.value) %> OFF</td>
             <% end %>
             <td><%= coupon.item_name(coupon.item_id) %></td>
-            <td><%= coupon.is_enabled %></td>
+            <td>
+              <% if coupon.is_enabled %>
+                <p>Enabled</p>
+                <%= link_to "Disable", "/merchant/coupons/#{coupon.id}/update_status", method: :patch, class: "btn btn-danger"%>
+              <% else %>
+                <p>Disabled</p>
+                <%= link_to "Enable", "/merchant/coupons/#{coupon.id}/update_status", method: :patch, class: "btn btn-success"%>
+              <% end %>
+            </td>
             <td>
               <%= link_to "Edit", edit_merchant_coupon_path(coupon), class: "btn btn-info" %>
               <%= link_to "Delete", merchant_coupon_path(coupon), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>

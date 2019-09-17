@@ -26,7 +26,13 @@ describe Coupon, type: :model do
 
       expect(coupon_1).to_not eq(coupon_2)
       expect(coupon_1.generate_code.length).to eq(10)
+    end
 
+    it "#toggle_status" do
+      coupon_1 = Coupon.new
+      expect(coupon_1.is_enabled).to be true
+      coupon_1.toggle_status
+      expect(coupon_1.is_enabled).to be false
     end
   end
 end

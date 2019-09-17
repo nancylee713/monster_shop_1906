@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :coupons
   end
 
+  patch "/merchant/coupons/:id/update_status", to: "merchant/coupons#update_status"
+  
   patch "/merchant/items/:item_id/update_status", to: "merchant/items#update_status"
 
   resources :merchants do
