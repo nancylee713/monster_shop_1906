@@ -1,7 +1,7 @@
 <center id='form-coupon-<%= @coupon.id %>'>
   <%= form_for [@merchant, @coupon] do |f| %>
     <%= f.label :name %>
-    <%= f.text_field :name, value: @coupon.generate_code %>
+    <%= f.text_field :name, value: name %>
 
     <%= f.label :value %>
     <%= f.text_field :value %>
