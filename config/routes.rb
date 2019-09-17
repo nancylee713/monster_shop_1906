@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :orders, only: [:show]
     get "/orders/:id", to: "dashboard#show", as: :orders_show
     resources :items, as: :user
+
+    resources :coupons
   end
 
   patch "/merchant/items/:item_id/update_status", to: "merchant/items#update_status"
