@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20190917023552) do
   create_table "coupons", force: :cascade do |t|
     t.string "name"
     t.float "value"
+    t.boolean "is_percent"
     t.boolean "is_enabled", default: true
     t.integer "item_id"
     t.bigint "merchant_id"
