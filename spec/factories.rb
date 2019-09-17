@@ -68,4 +68,15 @@ FactoryBot.define do
     sequence(:rating) { Faker::Number.between(from: 1, to: 5) }
     item
   end
+
+  factory :coupon do
+    name { Faker::Alphanumeric.alphanumeric(number: 10).upcase }
+    value { 5 }
+    is_percent { true }
+    is_enabled { true }
+    is_redeemed { false }
+    item_id { 1 }
+    merchant
+    user
+  end
 end
