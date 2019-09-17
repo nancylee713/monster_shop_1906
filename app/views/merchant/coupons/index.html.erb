@@ -9,6 +9,7 @@
         <th scope="col">Coupon ID</th>
         <th scope="col">Coupon Name</th>
         <th scope="col">Value</th>
+        <th scope="col">Item</th>
         <th scope="col">Enabled?</th>
         <th scope="col"></th>
       </tr>
@@ -21,6 +22,7 @@
             <td>#<%= coupon.id %></td>
             <td><%= coupon.name %></td>
             <td><%= coupon.value %></td>
+            <td><%= coupon.item.name %></td>
             <td><%= coupon.is_enabled %></td>
             <td>-</td>
           </tr>
