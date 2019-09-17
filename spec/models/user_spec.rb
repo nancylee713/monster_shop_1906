@@ -18,8 +18,7 @@ describe User, type: :model do
     it {should have_many :addresses }
     it {should accept_nested_attributes_for :addresses}
     it {should have_many :orders}
-    it {should have_many :coupon_users}
-    it {should have_many(:coupons).through(:coupon_users)}
+    it {should have_many :coupons}
   end
 
   describe "roles" do

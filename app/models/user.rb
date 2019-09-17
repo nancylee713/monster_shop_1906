@@ -17,8 +17,7 @@ class User < ApplicationRecord
 
   has_many :orders
 
-  has_many :coupon_users
-  has_many :coupons, through: :coupon_users
+  has_many :coupons
 
   enum role: [:regular_user, :merchant_employee, :merchant_admin, :admin_user]
 

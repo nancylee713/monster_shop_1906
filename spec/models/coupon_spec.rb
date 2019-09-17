@@ -11,12 +11,12 @@ describe Coupon, type: :model do
     it { should validate_presence_of :is_enabled }
     it { should validate_inclusion_of(:is_enabled).in_array([true, false]) }
     it { should validate_inclusion_of(:is_percent).in_array([true, false]) }
+    it { should validate_inclusion_of(:is_redeemed).in_array([true, false])}
   end
 
   describe "relationships" do
-    it {should have_many :coupon_users}
-    it {should have_many(:users).through(:coupon_users)}
     it {should belong_to :merchant}
+    it {should belong_to(:user).optional}
   end
 
   describe "methods" do
