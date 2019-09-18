@@ -9,7 +9,7 @@ RSpec.describe("New Order Page") do
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       @regular_user = create(:user)
-      address = @regular_user.addresses.create(attributes_for(:address))
+      @address = @regular_user.addresses.create(attributes_for(:address))
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@regular_user)
 
@@ -65,6 +65,22 @@ RSpec.describe("New Order Page") do
       expect(page).to have_css(".address_dropdown")
       expect(page).to have_link("Add a new address")
       expect(page).to have_button("Create Order")
+    end
+
+    it "Once I submit my order I am redirected to my profile order page that displays my order info" do
+      visit "/cart"
+      click_on "Checkout"
+
+      fill_in "order_name", with: "John"
+      find("option[value=#{@address.id}]").click
+      click_button "Create Order"
+
+      new_order = Order.last
+
+      expect(current_path).to eq(profile_orders_path)
+      expect(page).to have_content("Your order has been created!")
+      expect(page).to have_content(new_order.id)
+      expect(page).to have_content(new_order.address)
     end
 
     it "I see a form where I can select a coupon for specific item" do
