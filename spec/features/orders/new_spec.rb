@@ -110,7 +110,10 @@ RSpec.describe("New Order Page") do
       click_button "Apply"
 
       expect(current_path).to eq("profile/orders/coupon")
-      expect(page).to have_content("Discounted Total: $#{discounted}")
+
+      within "#discounted-total" do
+        expect(page).to have_content("$#{discounted}")
+      end
     end
   end
 end
