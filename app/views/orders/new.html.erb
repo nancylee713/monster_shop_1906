@@ -1,39 +1,5 @@
-<br><br>
-<div class="container">
-  <div class="row">
-    <div class="col-3">
-      <span class="display-5">Order Details</span>
-    </div>
+<%= render partial: 'order_section', locals: {section_name: "Order Details", partial_name: "order_checkout"} %>
 
-    <div class="col-9">
-      <%= render partial: 'order_checkout' %>
-    </div>
-  </div>
-</div>
-<br><br>
+<%= render partial: 'order_section', locals: {section_name: "Coupon Codes", partial_name: "coupon"} %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-3">
-      <span class="display-5">Coupon Codes</span>
-    </div>
-
-    <div class="col-9">
-      <%= render partial: 'coupon' %>
-    </div>
-  </div>
-</div>
-
-<br><br>
-
-<div class="container">
-  <div class="row">
-    <div class="col-3">
-      <span class="display-5">Shipping Address</span>
-    </div>
-
-    <div class="col-9">
-      <%= render partial: 'shipping' %>
-    </div>
-  </div>
-</div>
+<%= render partial: 'order_section', locals: {section_name: "Shipping Address", partial_name: "shipping"} %>
