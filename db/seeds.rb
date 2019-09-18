@@ -55,8 +55,8 @@ merchant_admin = FactoryBot.create(:merchant_admin, merchant: bike_shop)
 admin = FactoryBot.create(:admin)
 
 #coupons
-coupon_1 = FactoryBot.create(:coupon, merchant: bike_shop, user: user_1)
-coupon_2 = FactoryBot.create(:coupon, merchant: dunder, user: user_1)
+coupon_1 = FactoryBot.create(:coupon, merchant: bike_shop, item_id: tire.id, user: user_1)
+coupon_2 = FactoryBot.create(:coupon, merchant: dunder, item_id: dundie.id, user: user_1)
 
 #orders
 order_1 = FactoryBot.create(:order, user: user_1, address: address_1, status: 0)
