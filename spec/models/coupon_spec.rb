@@ -16,6 +16,7 @@ describe Coupon, type: :model do
   describe "relationships" do
     it {should belong_to :merchant}
     it {should belong_to(:user).optional}
+    it {should have_one :order}
   end
 
   describe "methods" do

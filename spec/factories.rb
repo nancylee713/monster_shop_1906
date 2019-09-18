@@ -43,6 +43,7 @@ FactoryBot.define do
     status { 1 }
     user
     address
+    coupon
   end
 
   factory :merchant do

@@ -6,6 +6,7 @@ class Coupon < ApplicationRecord
 
   belongs_to :merchant
   belongs_to :user, optional: true
+  has_one :order
 
   def generate_code
     characters = %w(A B C D E F G H J K L M P Q R T W X Y Z 1 2 3 4 5 6 7 8 9)

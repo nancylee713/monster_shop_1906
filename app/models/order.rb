@@ -8,6 +8,7 @@ class Order <ApplicationRecord
 
   belongs_to :user
   belongs_to :address
+  belongs_to :coupon, optional: true
 
   enum status: [:packaged, :pending, :shipped, :cancelled]
 
