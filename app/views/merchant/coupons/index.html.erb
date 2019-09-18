@@ -1,8 +1,11 @@
 <center><h1>My Coupons</h1> </center>
-
+<br>
 <div class="container">
-  <p><%= link_to "Add New Coupon", new_merchant_coupon_path unless @merchant.reach_coupon_limit? %></p>
-
+  <center>
+    <p><%= link_to "Add New Coupon", (new_merchant_coupon_path unless @merchant.reach_coupon_limit?), class: "btn btn-success" %></p>
+    <small class="form-text text-muted">We allow a maximum of 5 coupons per merchant.</small>
+  </center>
+  <br>
   <table class="table">
     <thead class="thead-light">
       <tr>
