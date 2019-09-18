@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :orders
 
   has_many :coupons
+  # accepts_nested_attributes_for :coupons, allow_destroy: true, reject_if: :all_blank
 
   enum role: [:regular_user, :merchant_employee, :merchant_admin, :admin_user]
 

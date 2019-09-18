@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   patch "/merchant/coupons/:id/update_status", to: "merchant/coupons#update_status"
-  
+
   patch "/merchant/items/:item_id/update_status", to: "merchant/items#update_status"
 
   resources :merchants do
@@ -58,6 +58,7 @@ Rails.application.routes.draw do
 
   get "profile/orders/:id/edit", to: "orders#edit", as: :order_edit
   patch "profile/orders/:id", to: "orders#update"
+  post "/profile/orders/coupon", to: "orders#update_total"
 
   get "/profile/addresses/new", to: "addresses#new"
   post "/profile/addresses", to: "addresses#create"

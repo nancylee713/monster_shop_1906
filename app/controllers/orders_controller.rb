@@ -50,6 +50,15 @@ class OrdersController <ApplicationController
     end
   end
 
+  def update_total
+    coupon_id = params[:order][:coupon_id].to_i
+    coupon = Coupon.find(coupon_id)
+
+    #update cart hash? how to display in view?
+    @discounted_total = coupon.recalculate_order_total(cart)
+    render :partial => "order_checkout", :object => @discounted_total
+  end
+
   private
   def order_params
     params.require(:order).permit(:name, :address_id, :user_id)

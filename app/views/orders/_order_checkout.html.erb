@@ -23,3 +23,5 @@
     <td colspan=5 id="order-grandtotal"><h3><%= number_to_currency(cart.total)%></h3></td>
   </tr>
 </table>
+
+ <h1>Discounted Total: <%= number_to_currency(@discounted_total) %></h1>
