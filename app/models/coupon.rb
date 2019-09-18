@@ -22,4 +22,27 @@ class Coupon < ApplicationRecord
   def toggle_status
     self.toggle!(:is_enabled)
   end
+
+  def recalculate_order_total(cart)
+    item = Item.find(self.item_id)
+    item_subtotal = cart.subtotal(item)
+
+    if self.is_percent
+      coupon_percent = 1 - (self.value * 0.01)
+      new_subtotal = item_subtotal * coupon_percent
+    else
+      coupon_value = self.value
+      new_subtotal = item_subtotal - coupon_value
+    end
+
+    discounted_total = cart.total - cart.subtotal(item) + new_subtotal
+  end
+
+  def show_coupon
+    if self.is_percent
+      "#{item_name(self.item_id)}, #{self.value}% OFF"
+    else
+      "#{item_name(self.item_id)}, $#{self.value} OFF"
+    end
+  end
 end
