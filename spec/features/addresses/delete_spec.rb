@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Address delete', type: :feature do
   before(:each) do
-    @user = User.create!(name: 'user-1', email: 'email-1@email.com', password: 'password')
+    @user = User.create!(name: 'user-1', email: 'user@email.com', password: 'password')
     @home_address = @user.addresses.create!(id: 1, street: 'street-1', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'home')
     @dorm_address = @user.addresses.create!(id: 2, street: 'street-2', city: 'Denver', state: 'CO', zipcode: '80202', nickname: 'dorm')
     # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)

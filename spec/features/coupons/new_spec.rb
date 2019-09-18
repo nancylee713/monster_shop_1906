@@ -48,7 +48,11 @@ RSpec.describe "Coupon creation" do
         coupon_5 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
 
         visit merchant_coupons_path
-        expect(page).to_not have_link("Add New Coupon")
+
+        click_link("Add New Coupon")
+
+        expect(current_path).to eq(merchant_coupons_path)
+
       end
     end
   end

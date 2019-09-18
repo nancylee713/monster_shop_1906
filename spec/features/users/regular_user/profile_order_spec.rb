@@ -32,7 +32,7 @@ RSpec.describe "User Profile Order Page" do
     visit "/cart"
     click_on "Checkout"
 
-    fill_in "Name", with: "Bert"
+    fill_in "order_name", with: "Bert"
     find("option[value=1]").click
 
     click_on "Create Order"
