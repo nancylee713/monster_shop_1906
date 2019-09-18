@@ -67,12 +67,34 @@ RSpec.describe("New Order Page") do
       expect(page).to have_button("Create Order")
     end
 
-    it "I see a form where I can enter coupon code" do
+    it "I see a form where I can select a coupon for specific item" do
       visit "/cart"
       click_on "Checkout"
 
       expect(page).to have_css(".user_coupon_dropdown")
       expect(page).to have_button("Apply")
+    end
+
+    it "When I click apply button I see an updated order total price" do
+      user = create(:user)
+      address = user.addresses.create(attributes_for(:address))
+      merchant = create(:merchant)
+      item = merchant.items.create(attributes_for(:item, price: 100))
+      order = create(:order, user: user, address: address)
+      item_order = ItemOrder.create!(order: order, item: item, quantity: 1, price: item.price, user: user)
+      coupon_1 = create(:coupon, value: 5, is_percent: false, merchant: merchant, item_id: item.id, user: user)
+
+      cart = Cart.new({"#{item.id}"=>1})
+
+      discounted = item_order.subtotal - coupon_1.value
+
+      visit "/cart"
+      click_on "Checkout"
+
+      click_button "Apply"
+
+      expect(current_path).to eq("profile/orders/coupon")
+      expect(page).to have_content("Discounted Total: $#{discounted}")
     end
   end
 end
