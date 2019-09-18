@@ -35,7 +35,13 @@ class Coupon < ApplicationRecord
       new_subtotal = item_subtotal - coupon_value
     end
 
-    discounted_total = cart.total - cart.subtotal(item) + new_subtotal
+    if new_subtotal < 0
+      discounted_total = cart.total - cart.subtotal(item)
+    else
+      discounted_total = cart.total - cart.subtotal(item) + new_subtotal
+    end
+
+    discounted_total
   end
 
   def show_coupon

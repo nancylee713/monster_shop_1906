@@ -49,6 +49,10 @@ describe Coupon, type: :model do
       discounted = item_order.subtotal - coupon_1.value
 
       expect(coupon_1.recalculate_order_total(cart)).to eq(discounted)
+
+      coupon_2 = create(:coupon, value: 105, is_percent: false, merchant: merchant, item_id: item.id, user: user)
+
+      expect(coupon_2.recalculate_order_total(cart)).to eq(0)
     end
 
     it "show_coupon" do
