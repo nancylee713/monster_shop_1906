@@ -1,37 +1,39 @@
-<h1 align = "center">Order</h1>
-<table>
-  <tr>
-    <th>Item</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Subtotal</th>
-    <th>Sold By</th>
-    <th>Inventory</th>
-  </tr>
+<br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <span class="display-5">Order Details</span>
+    </div>
 
-  <% cart.items.each do |item, quantity| %>
-    <tr id='order-item-<%= item.id%>'>
-      <td><h2><%= link_to item.name, "/items/#{item.id}" %></h2></td>
-      <td><p><%= number_to_currency(item.price) %></p></td>
-      <td><p><%= quantity %></p></td>
-      <td><p><%= number_to_currency(cart.subtotal(item)) %></p></td>
-      <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
-      <td><p><%= item.inventory %> in stock</p></td>
-    </tr>
-  <% end %>
-</table>
-<h3 align = "right">Total: <%= number_to_currency(cart.total)%></h3>
-<center>
-  <h2>Shipping Info:</h2>
-  <%= form_for(@order, url: "/profile/orders") do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <div class="col-9">
+      <%= render partial: 'order_checkout' %>
+    </div>
+  </div>
+</div>
+<br><br>
 
-    <%= f.select(:address_id, current_user.addresses.collect{|a| [a.to_s, a.id]}, {}, { :class => 'address_dropdown' }) %>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <span class="display-5">Coupon Codes</span>
+    </div>
 
-    <%= link_to "Add a new address", profile_addresses_new_path %>
+    <div class="col-9">
+      <%= render partial: 'coupon' %>
+    </div>
+  </div>
+</div>
 
-    <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.submit %>
-  <% end %>
-</center>
+<br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <span class="display-5">Shipping Address</span>
+    </div>
+
+    <div class="col-9">
+      <%= render partial: 'shipping' %>
+    </div>
+  </div>
+</div>

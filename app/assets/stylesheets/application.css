@@ -130,6 +130,11 @@ form {
   width: 60%;
 }
 
+#new_order {
+  background-color: transparent;
+  width: 45%;
+}
+
 .error-flash {
   padding: 10px;
   background-color: red;
@@ -187,4 +192,14 @@ input[type="number"] {
   width: 50%;
   display: block;
   margin: auto;
+}
+
+.display-5 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+#order-total {
+  background-color: #F0F8FF;
 }

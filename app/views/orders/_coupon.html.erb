@@ -1,0 +1,6 @@
+<center>
+  <%= form_for(@order, url: "/profile/orders/coupon") do |f| %>
+    <%= f.select(:coupon_id, current_user.coupons.collect{|c| [c.item_name(c.item_id), c.id]}, {}, { :class => 'user_coupon_dropdown' }) %>
+    <%= f.submit "Apply" %>
+  <% end %>
+</center>
