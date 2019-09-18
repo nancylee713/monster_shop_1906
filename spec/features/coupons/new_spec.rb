@@ -40,6 +40,17 @@ RSpec.describe "Coupon creation" do
         end
       end
 
+      it "I see a flash message when not all fields are filled out" do
+        visit merchant_coupons_path
+        click_link("Add New Coupon")
+
+        expect(current_path).to eq(new_merchant_coupon_path)
+
+        click_on "Create Coupon"
+
+        expect(page).to have_content("Value can't be blank and Value is not a number")
+      end
+
       it "I cannot create more than 5 coupons" do
         coupon_1 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
         coupon_2 = create(:coupon, merchant: @bike_shop, item_id: @tire.id)
