@@ -52,17 +52,27 @@ RSpec.describe("New Order Page") do
         expect(page).to have_content("$2")
       end
 
-      expect(page).to have_content("Total: $142")
+      within "#order-grandtotal" do
+        expect(page).to have_content("$142.00")
+      end
     end
 
     it "I see a form where I can enter my shipping info" do
       visit "/cart"
       click_on "Checkout"
 
-      expect(page).to have_field("Name")
+      expect(page).to have_field("order_name")
       expect(page).to have_css(".address_dropdown")
       expect(page).to have_link("Add a new address")
       expect(page).to have_button("Create Order")
+    end
+
+    it "I see a form where I can enter coupon code" do
+      visit "/cart"
+      click_on "Checkout"
+
+      expect(page).to have_css(".user_coupon_dropdown")
+      expect(page).to have_button("Apply")
     end
   end
 end
