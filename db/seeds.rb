@@ -8,6 +8,7 @@
 
 ItemOrder.destroy_all
 Order.destroy_all
+Coupon.destroy_all
 Address.destroy_all
 User.destroy_all
 Review.destroy_all
@@ -49,11 +50,15 @@ address_3 = FactoryBot.create(:address, nickname: "dorm 1")
 address_4 = FactoryBot.create(:address, nickname: "dorm 2")
 address_5 = FactoryBot.create(:address, nickname: "dorm 3")
 
-
 merchant_employee = FactoryBot.create(:merchant_employee, merchant: bike_shop)
 merchant_admin = FactoryBot.create(:merchant_admin, merchant: bike_shop)
 admin = FactoryBot.create(:admin)
 
+#coupons
+coupon_1 = FactoryBot.create(:coupon, merchant: bike_shop, user: user_1)
+coupon_2 = FactoryBot.create(:coupon, merchant: dunder, user: user_1)
+
+#orders
 order_1 = FactoryBot.create(:order, user: user_1, address: address_1, status: 0)
   item_order_1 = ItemOrder.create!(order: order_1, item: tire, quantity: 2, price: tire.price, user: user_1, fulfilled?: 0)
   item_order_2 = ItemOrder.create!(order: order_1, item: bike, quantity: 5, price: bike.price, user: user_1, fulfilled?: 0)

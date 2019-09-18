@@ -72,8 +72,8 @@ FactoryBot.define do
 
   factory :coupon do
     name { Faker::Alphanumeric.alphanumeric(number: 10).upcase }
-    value { 5 }
-    is_percent { true }
+    value { 1 }
+    is_percent { false }
     is_enabled { true }
     is_redeemed { false }
     item_id { 1 }
