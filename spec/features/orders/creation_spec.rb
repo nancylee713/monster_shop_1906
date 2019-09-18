@@ -29,7 +29,7 @@ RSpec.describe("Order Creation") do
     end
 
     it 'I can create a new order' do
-      fill_in "Name", with: "Bert"
+      fill_in "order_name", with: "Bert"
       find("option[value=1]").click
 
       click_button "Create Order"
@@ -42,7 +42,7 @@ RSpec.describe("Order Creation") do
     it "I can add a new address on the order form" do
       name = "Bert"
 
-      fill_in "Name", with: name
+      fill_in "order_name", with: name
 
       click_link "Add a new address"
 
@@ -65,7 +65,7 @@ RSpec.describe("Order Creation") do
     end
 
     it "once the order is complete, cart info is saved to item_orders table" do
-      fill_in "Name", with: "Bert"
+      fill_in "order_name", with: "Bert"
       find("option[value=1]").click
 
       click_button "Create Order"
@@ -78,7 +78,7 @@ RSpec.describe("Order Creation") do
 
     it 'i cant create order if info not filled out' do
 
-      fill_in "Name", with: ""
+      fill_in "order_name", with: ""
 
       click_button "Create Order"
 
