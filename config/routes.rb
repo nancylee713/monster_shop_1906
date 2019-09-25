@@ -7,18 +7,22 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  get "/register", to: "users#new"
+  post "/register", to: "users#create"
+
   namespace :merchant do
     get "/", to: "dashboard#index", as: :user
-    resources :orders, only: [:show]
     get "/orders/:id", to: "dashboard#show", as: :orders_show
-    resources :items, as: :user
 
+    resources :orders, only: [:show]
+    resources :items, as: :user
     resources :coupons
   end
 
-  patch "/merchant/coupons/:id/update_status", to: "merchant/coupons#update_status"
-
+  patch "/merchant/:order_id/:item_order_id/fulfill", to: "merchant/orders#fulfill"
   patch "/merchant/items/:item_id/update_status", to: "merchant/items#update_status"
+  patch "/merchants/:id/update_status", to: "merchants#update_status"
+  patch "/merchant/coupons/:id/update_status", to: "merchant/coupons#update_status"
 
   resources :merchants do
     resources :items, only: [:index]
@@ -28,7 +32,6 @@ Rails.application.routes.draw do
     resources :reviews, except: [:show, :index]
   end
 
-  # resources :orders, only: [:new, :create]
   patch "/orders/:id", to: "orders#cancel", as: :order_cancel
 
   namespace :admin do
@@ -39,27 +42,15 @@ Rails.application.routes.draw do
     resources :merchants, only: [:show]
   end
 
-  patch "/merchant/:order_id/:item_order_id/fulfill", to: "merchant/orders#fulfill"
-  patch "/merchants/:id/update_status", to: "merchants#update_status"
-
-  get "/register", to: "users#new"
-  post "/register", to: "users#create"
-
   get "/profile", to: "users#show"
   get "/profile/edit", to: "users#edit"
   patch "/profile", to: "users#update"
   get "/profile/edit_password", to: "users#edit_password"
   patch "/profile/update_password", to: "users#update_password"
 
-
-  # get "/profile/orders/new", to: "orders#new"
-  # post profile_orders_path, to: "orders#create"
-  # get "profile/orders/:id/edit", to: "orders#edit", as: :order_edit
-  # patch "profile/orders/:id", to: "orders#update"
-
   scope :profile, as: :profile do
     resources :orders, except: [:index, :destroy, :show]
-    
+
     get "/orders", to: "users#show_orders"
     get "/orders/:id", to: "users#show_order"
     post "/orders/coupon", to: "orders#update_total"
