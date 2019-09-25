@@ -51,14 +51,19 @@ Rails.application.routes.draw do
   get "/profile/edit_password", to: "users#edit_password"
   patch "/profile/update_password", to: "users#update_password"
 
-  get "/profile/orders", to: "users#show_orders"
-  post "/profile/orders", to: "orders#create"
-  get "/profile/orders/new", to: "orders#new"
-  get "/profile/orders/:id", to: "users#show_order"
 
-  get "profile/orders/:id/edit", to: "orders#edit", as: :order_edit
-  patch "profile/orders/:id", to: "orders#update"
-  post "/profile/orders/coupon", to: "orders#update_total"
+  # get "/profile/orders/new", to: "orders#new"
+  # post profile_orders_path, to: "orders#create"
+  # get "profile/orders/:id/edit", to: "orders#edit", as: :order_edit
+  # patch "profile/orders/:id", to: "orders#update"
+
+  scope :profile, as: :profile do
+    resources :orders, except: [:index, :destroy, :show]
+    
+    get "/orders", to: "users#show_orders"
+    get "/orders/:id", to: "users#show_order"
+    post "/orders/coupon", to: "orders#update_total"
+  end
 
   scope :profile, as: :profile do
     resources :addresses, except: [:index]
