@@ -60,15 +60,15 @@ Rails.application.routes.draw do
   patch "profile/orders/:id", to: "orders#update"
   post "/profile/orders/coupon", to: "orders#update_total"
 
-  get "/profile/addresses/new", to: "addresses#new"
-  post "/profile/addresses", to: "addresses#create"
-  get "/profile/addresses/:id/edit", to: "addresses#edit"
-  patch "/profile/addresses/:id", to: "addresses#update"
-  delete "/profile/addresses/:id", to: "addresses#destroy"
+  scope :profile, as: :profile do
+    resources :addresses, except: [:index]
+  end
 
-  post "/cart/:item_id", to: "cart#add_item"
-  get "/cart", to: "cart#show"
-  delete "/cart", to: "cart#empty"
-  delete "/cart/:item_id", to: "cart#remove_item"
-  patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
+  scope :cart, as: :cart do
+    get "/", to: "cart#show"
+    post "/:item_id", to: "cart#add_item"
+    patch "/:item_id/:increment_decrement", to: "cart#increment_decrement"
+    delete "/", to: "cart#empty"
+    delete "/:item_id", to: "cart#remove_item"
+  end
 end
