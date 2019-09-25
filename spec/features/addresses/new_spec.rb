@@ -13,7 +13,7 @@ RSpec.describe "Address creation" do
 
       click_link "Add New Address"
 
-      expect(current_path).to eq(profile_addresses_new_path)
+      expect(current_path).to eq(new_profile_address_path)
     end
   end
 
@@ -59,7 +59,7 @@ RSpec.describe "Address creation" do
       click_on "Create Address"
 
       expect(page).to have_content("Street can't be blank, City can't be blank, and Nickname can't be blank")
-      expect(current_path).to eq(profile_addresses_new_path)
+      expect(current_path).to eq(new_profile_address_path)
     end
   end
 end

@@ -21,7 +21,7 @@ RSpec.describe "User Profile Order Page" do
     @item_order_1 = @user.item_orders.create!(order: @order_1, item: item_1, quantity: 1, price: item_1.price)
     @item_order_2 = @user.item_orders.create!(order: @order_2, item: item_2, quantity: 3, price: item_2.price)
 
-    visit "/profile/orders"
+    visit profile_orders_path
   end
 
   describe "After checking out my order, if an order is still pending" do
@@ -32,7 +32,7 @@ RSpec.describe "User Profile Order Page" do
 
       expect(page).to_not have_link("Update Shipping Address")
 
-      visit "/profile/orders"
+      visit profile_orders_path
 
       within "#order-#{@order_1.id}" do
         click_link(@order_1.id)

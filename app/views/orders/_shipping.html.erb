@@ -1,10 +1,10 @@
 <center>
-  <%= form_for(@order, url: "/profile/orders") do |f| %>
+  <%= form_for(@order, url: profile_orders_path) do |f| %>
     <%= f.text_field :name, placeholder: "Enter Name" %>
 
     <%= f.select(:address_id, current_user.addresses.collect{|a| [a.to_s, a.id]}, {}, { :class => 'address_dropdown' }) %>
 
-    <h5><%= link_to "Add a new address", profile_addresses_new_path %></h5>
+    <h5><%= link_to "Add a new address", new_profile_address_path %></h5>
 
     <%= f.hidden_field :user_id, value: current_user.id %>
     <%= f.submit %>

@@ -5,7 +5,7 @@ class OrdersController <ApplicationController
       @order = current_user.orders.new
     else
       flash[:no_address] = "There is currently no shipping address available. Please add a new address to proceed to checkout"
-      redirect_to profile_addresses_new_path
+      redirect_to new_profile_address_path
     end
   end
 
@@ -25,7 +25,7 @@ class OrdersController <ApplicationController
       cart.save_to_db(current_user, @order)
       session.delete(:cart)
       flash[:order] = "Your order has been created!"
-      redirect_to "/profile/orders"
+      redirect_to profile_orders_path
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new

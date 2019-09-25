@@ -7,18 +7,22 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  get "/register", to: "users#new"
+  post "/register", to: "users#create"
+
   namespace :merchant do
     get "/", to: "dashboard#index", as: :user
-    resources :orders, only: [:show]
     get "/orders/:id", to: "dashboard#show", as: :orders_show
-    resources :items, as: :user
 
+    resources :orders, only: [:show]
+    resources :items, as: :user
     resources :coupons
   end
 
-  patch "/merchant/coupons/:id/update_status", to: "merchant/coupons#update_status"
-
+  patch "/merchant/:order_id/:item_order_id/fulfill", to: "merchant/orders#fulfill"
   patch "/merchant/items/:item_id/update_status", to: "merchant/items#update_status"
+  patch "/merchants/:id/update_status", to: "merchants#update_status"
+  patch "/merchant/coupons/:id/update_status", to: "merchant/coupons#update_status"
 
   resources :merchants do
     resources :items, only: [:index]
@@ -28,7 +32,6 @@ Rails.application.routes.draw do
     resources :reviews, except: [:show, :index]
   end
 
-  # resources :orders, only: [:new, :create]
   patch "/orders/:id", to: "orders#cancel", as: :order_cancel
 
   namespace :admin do
@@ -39,36 +42,29 @@ Rails.application.routes.draw do
     resources :merchants, only: [:show]
   end
 
-  patch "/merchant/:order_id/:item_order_id/fulfill", to: "merchant/orders#fulfill"
-  patch "/merchants/:id/update_status", to: "merchants#update_status"
-
-  get "/register", to: "users#new"
-  post "/register", to: "users#create"
-
   get "/profile", to: "users#show"
   get "/profile/edit", to: "users#edit"
   patch "/profile", to: "users#update"
   get "/profile/edit_password", to: "users#edit_password"
   patch "/profile/update_password", to: "users#update_password"
 
-  get "/profile/orders", to: "users#show_orders"
-  post "/profile/orders", to: "orders#create"
-  get "/profile/orders/new", to: "orders#new"
-  get "/profile/orders/:id", to: "users#show_order"
+  scope :profile, as: :profile do
+    resources :orders, except: [:index, :destroy, :show]
 
-  get "profile/orders/:id/edit", to: "orders#edit", as: :order_edit
-  patch "profile/orders/:id", to: "orders#update"
-  post "/profile/orders/coupon", to: "orders#update_total"
+    get "/orders", to: "users#show_orders"
+    get "/orders/:id", to: "users#show_order"
+    post "/orders/coupon", to: "orders#update_total"
+  end
 
-  get "/profile/addresses/new", to: "addresses#new"
-  post "/profile/addresses", to: "addresses#create"
-  get "/profile/addresses/:id/edit", to: "addresses#edit"
-  patch "/profile/addresses/:id", to: "addresses#update"
-  delete "/profile/addresses/:id", to: "addresses#destroy"
+  scope :profile, as: :profile do
+    resources :addresses, except: [:index]
+  end
 
-  post "/cart/:item_id", to: "cart#add_item"
-  get "/cart", to: "cart#show"
-  delete "/cart", to: "cart#empty"
-  delete "/cart/:item_id", to: "cart#remove_item"
-  patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
+  scope :cart, as: :cart do
+    get "/", to: "cart#show"
+    post "/:item_id", to: "cart#add_item"
+    patch "/:item_id/:increment_decrement", to: "cart#increment_decrement"
+    delete "/", to: "cart#empty"
+    delete "/:item_id", to: "cart#remove_item"
+  end
 end

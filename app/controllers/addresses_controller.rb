@@ -22,7 +22,7 @@ class AddressesController<ApplicationController
       redirect_to session.delete(:return_to)
     else
       flash[:error] = @address.errors.full_messages.to_sentence
-      redirect_to profile_addresses_new_path
+      redirect_to new_profile_address_path
     end
   end
 

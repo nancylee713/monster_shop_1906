@@ -20,14 +20,14 @@
 
     <%= link_to "Edit Profile", "profile/edit", class: "lead btn btn-info" %>
 
-    <%= link_to "My Orders", "/profile/orders", class: "btn btn-secondary" %>
+    <%= link_to "My Orders", profile_orders_path, class: "btn btn-secondary" %>
   </section>
 </center>
 </div>
 
 <div class="container my-addresses">
   <h3 display="display-3">My Addresses</h3><br>
-  <%= link_to "Add New Address", profile_addresses_new_path, class: "btn btn-success" %>
+  <%= link_to "Add New Address", new_profile_address_path, class: "btn btn-success" %>
   <br>
   <div class="row">
     <% @user.addresses.each_with_index do |address, i| %>
