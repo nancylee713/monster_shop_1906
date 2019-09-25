@@ -1,5 +1,5 @@
 <center>
-  <%= form_for(@order, url: "/profile/orders") do |f| %>
+  <%= form_for(@order, url: profile_orders_path) do |f| %>
     <%= f.text_field :name, placeholder: "Enter Name" %>
 
     <%= f.select(:address_id, current_user.addresses.collect{|a| [a.to_s, a.id]}, {}, { :class => 'address_dropdown' }) %>

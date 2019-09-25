@@ -69,7 +69,7 @@ RSpec.describe "User Profile Order Page" do
       click_link(@order_1.id)
     end
 
-    expect(current_path).to eq("/profile/orders/#{@order_1.id}")
+    expect(current_path).to eq(profile_order_path(@order_1))
 
     within "#order-#{@order_1.id}" do
       expect(page).to have_link(@order_1.id)
@@ -91,7 +91,7 @@ RSpec.describe "User Profile Order Page" do
 
   it "I can cancel the order only if it's pending" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
-    visit "/profile/orders/#{@order_1.id}"
+    visit profile_order_path(@order_1)
 
     expect(page).to have_link("Cancel Order")
 

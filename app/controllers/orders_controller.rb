@@ -25,7 +25,7 @@ class OrdersController <ApplicationController
       cart.save_to_db(current_user, @order)
       session.delete(:cart)
       flash[:order] = "Your order has been created!"
-      redirect_to "/profile/orders"
+      redirect_to profile_orders_path
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new
