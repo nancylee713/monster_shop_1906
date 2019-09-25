@@ -41,7 +41,7 @@ RSpec.describe 'Cart show' do
         click_link("Checkout")
 
         expect(page).to have_content("There is currently no shipping address available. Please add a new address to proceed to checkout")
-        expect(current_path).to eq(profile_addresses_new_path)
+        expect(current_path).to eq(new_profile_address_path)
       end
     end
   end
